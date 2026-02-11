@@ -101,10 +101,10 @@ function generateExploreTags() {
 
 function generateFunFacts() {
     funFacts = [
-        `Il y a ${packages.length} packages !`,
-        `Tag populaire: '${metrics.topTags[0]?.name}'`,
-        `${metrics.authors} auteurs uniques`,
-        `${metrics.domains[0]?.name} héberge le plus`
+        `There are currently ${packages.length} packages in the registry!`,
+        `Most popular tag: '${metrics.topTags[0]?.name}' with ${metrics.topTags[0]?.count} packages!`,
+        `${metrics.authors} unique authors in the ecosystem!`,
+        `${metrics.domains[0]?.name} hosts the most packages!`
     ];
 }
 
