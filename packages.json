@@ -1,0 +1,1346 @@
+[
+  {
+    "name": "aes",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/aes&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/aes/aes.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "standard", "crypto", "cipher"],
+    "description": "Implementation of the AES block cipher"
+  },
+  {
+    "name": "amazon-s3",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/amazon-s3&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/amazon-s3/s3.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "web", "cloud", "aws"],
+    "description": "S3 Amazon S3 Web Service Interface"
+  },
+  {
+    "name": "amazon-s3::xsxp",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/amazon-s3&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/amazon-s3/xsxp.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "xml", "parser"],
+    "description": "eXtremely Simple Xml Parser"
+  },
+  {
+    "name": "asn",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/asn&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/asn/asn.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "network", "protocol", "encoding"],
+    "description": "ASN.1 BER encoder/decoder"
+  },
+  {
+    "name": "base32",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/base32&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/base32/base32.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "encoding"],
+    "description": "base32 standard encoding"
+  },
+  {
+    "name": "base32::core",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/base32&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/base32/core.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "encoding"],
+    "description": "Expanding basic base32 maps"
+  },
+  {
+    "name": "base32::hex",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/base32&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/base32/hex.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "encoding", "hex"],
+    "description": "base32 extended hex encoding"
+  },
+  {
+    "name": "base64",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/base64&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/base64/base64.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "encoding"],
+    "description": "base64-encode/decode binary data"
+  },
+  {
+    "name": "base64::ascii85",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/base64&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/base64/ascii85.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "encoding"],
+    "description": "ascii85-encode/decode binary data"
+  },
+  {
+    "name": "base64::uuencode",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/base64&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/base64/uuencode.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "encoding"],
+    "description": "UU-encode/decode binary data"
+  },
+  {
+    "name": "base64::yencode",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/base64&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/base64/yencode.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "encoding"],
+    "description": "Y-encode/decode binary data"
+  },
+  {
+    "name": "bee",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/bee&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/bee/bee.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "serialization", "bittorrent"],
+    "description": "BitTorrent Serialization Format Encoder/Decoder"
+  },
+  {
+    "name": "bench",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/bench&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/bench/bench.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "benchmark", "testing"],
+    "description": "bench - Processing benchmark suites"
+  },
+  {
+    "name": "bench::in",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/bench&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/bench/bench_in.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "benchmark"],
+    "description": "bench::in - Reading benchmark results"
+  },
+  {
+    "name": "bench::out::csv",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/bench&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/bench/bench_out_csv.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "benchmark", "csv"],
+    "description": "bench::out::csv - Formatting benchmark results as CSV"
+  },
+  {
+    "name": "bench::out::text",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/bench&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/bench/bench_out_text.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "benchmark"],
+    "description": "bench::out::text - Formatting benchmark results as human readable text"
+  },
+  {
+    "name": "bibtex",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/bibtex&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/bibtex/bibtex.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "parsing", "bibliography"],
+    "description": "Parse bibtex files"
+  },
+  {
+    "name": "blowfish",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/blowfish&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/blowfish/blowfish.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "crypto", "cipher"],
+    "description": "Implementation of the Blowfish block cipher"
+  },
+  {
+    "name": "cache::async",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/cache&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/cache/async.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "cache", "async"],
+    "description": "Asynchronous in-memory cache"
+  },
+  {
+    "name": "clay",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/clay&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/clay/clay.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "oo", "framework"],
+    "description": "A minimalist framework for large scale OO Projects"
+  },
+  {
+    "name": "clock::iso8601",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/clock&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/clock/iso8601.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "time", "date"],
+    "description": "Parsing ISO 8601 dates/times"
+  },
+  {
+    "name": "clock::rfc2822",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/clock&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/clock/rfc2822.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "time", "date", "email"],
+    "description": "Parsing RFC 2822 dates/times"
+  },
+  {
+    "name": "cmdline",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/cmdline&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/cmdline/cmdline.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "cli", "arguments"],
+    "description": "Procedures to process command lines and options"
+  },
+  {
+    "name": "comm",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/comm&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/comm/comm.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "ipc", "communication"],
+    "description": "A remote communication facility for Tcl"
+  },
+  {
+    "name": "comm::wire",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/comm&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/comm/wire.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "ipc", "protocol"],
+    "description": "The comm wire protocol"
+  },
+  {
+    "name": "control",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/control&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/control/control.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "control", "flow"],
+    "description": "Procedures for control flow structures"
+  },
+  {
+    "name": "coroutine",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/coroutine&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/coroutine/coroutine.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "coroutine", "async"],
+    "description": "Coroutine based event and IO handling"
+  },
+  {
+    "name": "coroutine::auto",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/coroutine&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/coroutine/auto.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "coroutine", "auto"],
+    "description": "Automatic event and IO coroutine awareness"
+  },
+  {
+    "name": "counter",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/counter&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/counter/counter.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "statistics"],
+    "description": "Procedures for counters and histograms"
+  },
+  {
+    "name": "crc::cksum",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/crc&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/crc/cksum.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "checksum"],
+    "description": "Calculate a cksum(1) compatible checksum"
+  },
+  {
+    "name": "crc::crc16",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/crc&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/crc/crc16.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "checksum", "crc"],
+    "description": "Perform a 16bit Cyclic Redundancy Check"
+  },
+  {
+    "name": "crc::crc32",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/crc&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/crc/crc32.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "checksum", "crc"],
+    "description": "Perform a 32bit Cyclic Redundancy Check"
+  },
+  {
+    "name": "crc::sum",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/crc&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/crc/sum.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "checksum"],
+    "description": "Calculate a sum(1) compatible checksum"
+  },
+  {
+    "name": "cron",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/cron&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/cron/cron.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "scheduler", "time"],
+    "description": "Tool for automating the period callback of commands"
+  },
+  {
+    "name": "csv",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/csv&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/csv/csv.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "csv", "parsing"],
+    "description": "Procedures to handle CSV data"
+  },
+  {
+    "name": "debug",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/debug&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/debug/debug.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "debug", "logging"],
+    "description": "debug narrative - core"
+  },
+  {
+    "name": "debug::caller",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/debug&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/debug/caller.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "debug"],
+    "description": "debug narrative - caller"
+  },
+  {
+    "name": "debug::heartbeat",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/debug&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/debug/heartbeat.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "debug"],
+    "description": "debug narrative - heartbeat"
+  },
+  {
+    "name": "debug::timestamp",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/debug&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/debug/timestamp.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "debug", "time"],
+    "description": "debug narrative - timestamping"
+  },
+  {
+    "name": "defer",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/defer&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/defer/defer.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "control"],
+    "description": "Defered execution"
+  },
+  {
+    "name": "des",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/des&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/des/des.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "crypto", "cipher"],
+    "description": "Implementation of the DES and triple-DES ciphers"
+  },
+  {
+    "name": "dicttool",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/dicttool&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/dicttool/dicttool.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "dict", "tools"],
+    "description": "Dictionary Tools"
+  },
+  {
+    "name": "dns",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/dns&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/dns/dns.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "network", "dns"],
+    "description": "Tcl Domain Name Service Client"
+  },
+  {
+    "name": "dns::ip",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/dns&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/dns/tcllib_ip.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "network", "ip"],
+    "description": "IPv4 and IPv6 address manipulation"
+  },
+  {
+    "name": "docstrip",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/docstrip&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/docstrip/docstrip.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "literate-programming"],
+    "description": "Docstrip style source code extraction"
+  },
+  {
+    "name": "docstrip::util",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/docstrip&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/docstrip/util.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "literate-programming"],
+    "description": "Docstrip-related utilities"
+  },
+  {
+    "name": "fileutil",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/fileutil&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/fileutil/fileutil.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "file", "filesystem"],
+    "description": "Procedures implementing some file utilities"
+  },
+  {
+    "name": "ftp",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/ftp&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/ftp/ftp.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "network", "ftp", "client"],
+    "description": "Client-side tcl implementation of the ftp protocol"
+  },
+  {
+    "name": "ftpd",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/ftpd&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/ftpd/ftpd.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "network", "ftp", "server"],
+    "description": "Tcl FTP server implementation"
+  },
+  {
+    "name": "html",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/html&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/html/html.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "web", "html"],
+    "description": "Procedures to generate HTML structures"
+  },
+  {
+    "name": "htmlparse",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/htmlparse&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/htmlparse/htmlparse.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "web", "html", "parser"],
+    "description": "Procedures to parse HTML strings"
+  },
+  {
+    "name": "http",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/http&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/http/autoproxy.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "web", "http", "proxy"],
+    "description": "Automatic HTTP proxy usage and authentication"
+  },
+  {
+    "name": "httpd",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/httpd&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/httpd/httpd.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "web", "http", "server"],
+    "description": "A TclOO and coroutine based web server"
+  },
+  {
+    "name": "json",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/json&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/json/json.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "json", "parser"],
+    "description": "JSON parser"
+  },
+  {
+    "name": "json::write",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/json&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/json/write.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "json", "generator"],
+    "description": "JSON generation"
+  },
+  {
+    "name": "ldap",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/ldap&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/ldap/ldap.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "network", "ldap", "directory"],
+    "description": "LDAP client"
+  },
+  {
+    "name": "log",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/log&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/log/log.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "logging", "debug"],
+    "description": "Procedures to log messages of libraries and applications"
+  },
+  {
+    "name": "logger",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/log&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/log/logger.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "logging"],
+    "description": "System to control logging of events"
+  },
+  {
+    "name": "math",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/math.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "math", "library"],
+    "description": "Tcl Math Library"
+  },
+  {
+    "name": "math::bigfloat",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/bigfloat.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "math", "bigfloat", "precision"],
+    "description": "Arbitrary precision floating-point numbers"
+  },
+  {
+    "name": "math::bignum",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/bignum.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "math", "bignum", "integer"],
+    "description": "Arbitrary precision integer numbers"
+  },
+  {
+    "name": "math::statistics",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/statistics.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "math", "statistics"],
+    "description": "Basic statistical functions and procedures"
+  },
+  {
+    "name": "md5",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/md5&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/md5/md5.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "crypto", "hash", "md5"],
+    "description": "MD5 Message-Digest Algorithm"
+  },
+  {
+    "name": "md5crypt",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/md5crypt&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/md5crypt/md5crypt.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "crypto", "password"],
+    "description": "MD5-based password encryption"
+  },
+  {
+    "name": "mime",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/mime&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/mime/mime.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "email", "mime"],
+    "description": "Manipulation of MIME body parts"
+  },
+  {
+    "name": "smtp",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/mime&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/mime/smtp.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "email", "smtp", "network"],
+    "description": "Client-side tcl implementation of the smtp protocol"
+  },
+  {
+    "name": "ntp",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/ntp&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/ntp/time.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "time", "ntp", "network"],
+    "description": "Tcl Time Service Client"
+  },
+  {
+    "name": "pop3",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/pop3&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/pop3/pop3.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "email", "pop3", "client"],
+    "description": "Tcl client for POP3 email protocol"
+  },
+  {
+    "name": "pop3d",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/pop3d&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/pop3d/pop3d.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "email", "pop3", "server"],
+    "description": "Tcl POP3 server implementation"
+  },
+  {
+    "name": "sha1",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/sha1&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/sha1/sha1.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "crypto", "hash", "sha1"],
+    "description": "SHA1 Message-Digest Algorithm"
+  },
+  {
+    "name": "sha256",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/sha1&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/sha1/sha256.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "crypto", "hash", "sha256"],
+    "description": "SHA256 Message-Digest Algorithm"
+  },
+  {
+    "name": "struct::list",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/struct&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/struct/list.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "data-structure", "list"],
+    "description": "Procedures for manipulating lists"
+  },
+  {
+    "name": "struct::graph",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/struct&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/struct/graph.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "data-structure", "graph"],
+    "description": "Create and manipulate directed graph objects"
+  },
+  {
+    "name": "struct::tree",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/struct&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/struct/tree.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "data-structure", "tree"],
+    "description": "Create and manipulate tree objects"
+  },
+  {
+    "name": "struct::matrix",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/struct&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/struct/matrix.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "data-structure", "matrix"],
+    "description": "Create and manipulate matrix objects"
+  },
+  {
+    "name": "struct::queue",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/struct&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/struct/queue.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "data-structure", "queue"],
+    "description": "Create and manipulate queue objects"
+  },
+  {
+    "name": "struct::stack",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/struct&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/struct/stack.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "data-structure", "stack"],
+    "description": "Create and manipulate stack objects"
+  },
+  {
+    "name": "struct::set",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/struct&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/struct/set.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "data-structure", "set"],
+    "description": "Commands for manipulating sets"
+  },
+  {
+    "name": "tar",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/tar&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/tar/tar.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "archive", "tar"],
+    "description": "Tar file creation, extraction & manipulation"
+  },
+  {
+    "name": "textutil",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/textutil&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/textutil/textutil.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "text", "string"],
+    "description": "Procedures to manipulate texts and strings"
+  },
+  {
+    "name": "textutil::adjust",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/textutil&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/textutil/adjust.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "text", "formatting"],
+    "description": "Procedures to adjust, indent, and undent paragraphs"
+  },
+  {
+    "name": "textutil::split",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/textutil&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/textutil/split.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "text", "string"],
+    "description": "Procedures to split texts"
+  },
+  {
+    "name": "textutil::trim",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/textutil&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/textutil/trim.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "text", "string"],
+    "description": "Procedures to trim strings"
+  },
+  {
+    "name": "textutil::tabify",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/textutil&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/textutil/tabify.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "text"],
+    "description": "Procedures to (un)tabify strings"
+  },
+  {
+    "name": "textutil::repeat",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/textutil&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/textutil/repeat.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "text", "string"],
+    "description": "Procedures to repeat strings"
+  },
+  {
+    "name": "textutil::string",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/textutil&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/textutil/string.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "text", "string"],
+    "description": "Procedures to manipulate texts and strings"
+  },
+  {
+    "name": "textutil::expander",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/textutil&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/textutil/expander.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "text", "template"],
+    "description": "Procedures to process templates and expand text"
+  },
+  {
+    "name": "tie",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/tie&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/tie/tie.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "array", "persistence"],
+    "description": "Array persistence"
+  },
+  {
+    "name": "uri",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/uri&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/uri/uri.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "web", "uri", "url"],
+    "description": "URI utilities"
+  },
+  {
+    "name": "uuid",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/uuid&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/uuid/uuid.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "uuid", "guid"],
+    "description": "UUID generation and comparison"
+  },
+  {
+    "name": "websocket",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/websocket&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/websocket/websocket.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "network", "websocket", "real-time"],
+    "description": "Tcl implementation of the websocket protocol"
+  },
+  {
+    "name": "yaml",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/yaml&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/yaml/yaml.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "yaml", "parser"],
+    "description": "YAML Format Encoder/Decoder"
+  },
+  {
+    "name": "huddle",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/yaml&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/yaml/huddle.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "yaml", "json", "data-structure"],
+    "description": "Create and manipulate huddle object"
+  },
+  {
+    "name": "zipfile::decode",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/zip&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/zip/decode.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "archive", "zip"],
+    "description": "Access to zip archives"
+  },
+  {
+    "name": "zipfile::encode",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/zip&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/zip/encode.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "archive", "zip"],
+    "description": "Generation of zip archives"
+  },
+  {
+    "name": "zipfile::mkzip",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/zip&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/zip/mkzip.md",
+        "author": "tcltk",
+        "license": "Tcl/Tk"
+      }
+    ],
+    "tags": ["tcllib", "module", "archive", "zip"],
+    "description": "Build a zip archive"
+  }
+]
