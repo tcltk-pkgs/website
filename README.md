@@ -2,16 +2,9 @@
 
 A web interface to discover and search Tcl/Tk packages.
 
-## Deploy
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f5c22882-2780-48b6-8736-053823060d4a/deploy-status)](https://app.netlify.com/projects/tcltkpkgs/deploys)
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/tcltk-pkgs/registry)
-
-## Structure
-
-- `index.html` + `style.css` + `script.js` - Web interface
-- `packages.json` - Database of packages
-
-## Adding a Package
+## Adding a package :
 
 Edit `packages.json`:
 
@@ -30,3 +23,8 @@ Edit `packages.json`:
   "tags": ["tcllib", "module", "category"],
   "description": "Description here"
 }
+```
+
+## Credits
+
+Developed with assistance from [Kimi](https://kimi.moonshot.cn) (Moonshot AI).
