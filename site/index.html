@@ -22,9 +22,29 @@
                     <span>TclTkpkgs</span>
                 </a>
                 <nav>
-                    <a href="#/search" class="nav-link">search</a>
-                    <a href="#/metrics" class="nav-link">metrics</a>
-                    <a href="#/about" class="nav-link">about</a>
+                    <a href="#/search" class="nav-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.35-4.35"/>
+                        </svg>
+                        <span>search</span>
+                    </a>
+                    <a href="#/metrics" class="nav-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+                            <line x1="18" y1="20" x2="18" y2="10"/>
+                            <line x1="12" y1="20" x2="12" y2="4"/>
+                            <line x1="6" y1="20" x2="6" y2="14"/>
+                        </svg>
+                        <span>metrics</span>
+                    </a>
+                    <a href="#/about" class="nav-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="16" x2="12" y2="12"/>
+                            <line x1="12" y1="8" x2="12.01" y2="8"/>
+                        </svg>
+                        <span>about</span>
+                    </a>
                     <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">
                         <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="5"/>
@@ -63,7 +83,7 @@
                         </p>
 
                         <form class="search-box" onsubmit="return handleSearch(event)">
-                            <input type="text" id="searchInput" placeholder="query" autocomplete="off">
+                            <input type="text" id="searchInput" placeholder="query" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
                             <button type="submit">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <circle cx="11" cy="11" r="8"/>
@@ -119,7 +139,7 @@
                 <div class="container page-container">
                     <h2>search</h2>
                     <form class="search-box" onsubmit="return handleSearch(event)">
-                        <input type="text" id="searchInput2" placeholder="query" autocomplete="off">
+                        <input type="text" id="searchInput2" placeholder="query" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
                         <button type="submit">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="11" cy="11" r="8"/>
@@ -195,15 +215,20 @@
             <div id="aboutPage" class="page-content" style="display: none;">
                 <div class="container page-container">
                     <h2>About</h2>
+                    <div class="about-image">
+                        <img src="assets/image.webp" 
+                            alt="Description de l'image" 
+                            width="1200" 
+                            height="800"
+                            loading="lazy"
+                            decoding="async">
+                    </div>
                     <div class="about-content">
                         <p>TclTkpkgs is a web interface to search for Tcl/Tk packages and libraries.</p>
                         <h3>Why does tcltkpkgs exist?</h3>
                         <p>Mainly for fun, to explore the Tcl/Tk ecosystem with modern web technologies.</p>
                         <h3>How do I add my package?</h3>
                         <p>Submit a PR to the registry with your package information.</p>
-                        <h3>Disclaimer on Metadata Accuracy :</h3>
-                        <p>Please note that despite best efforts, some packages may have incorrect license or author information due to the automated nature of data collection. I apologize for any inaccuracies this may have caused.</p>
-                        <p>If you spot an error in attribution or licensing for your project, please contact me so I can rectify it immediately. Your contributions to the Tcl/Tk ecosystem are valued and deserve proper recognition.</p>
                     </div>
                 </div>
             </div>

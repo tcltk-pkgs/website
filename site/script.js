@@ -160,25 +160,35 @@ function toggleTheme() {
 
 function handleHashChange() {
     const hash = window.location.hash || '#/';
+    
     if (hash.startsWith('#/pkg/')) {
         showPackageDetail(decodeURIComponent(hash.replace('#/pkg/', '')), false);
-    } else if (hash === '#/search') {
+    } else if (hash.startsWith('#/search')) {
         showPage('searchPage');
-        initializeSearchPage();
-    } else if (hash === '#/metrics') showPage('metricsPage');
-    else if (hash === '#/about') showPage('aboutPage');
-    else showPage('homePage');
+
+        const queryMatch = hash.match(/[?&]q=([^&]+)/);
+        const query = queryMatch ? decodeURIComponent(queryMatch[1]) : '';
+        
+        initializeSearchPage(query);
+    } else if (hash === '#/metrics') {
+        showPage('metricsPage');
+    } else if (hash === '#/about') {
+        showPage('aboutPage');
+    } else {
+        showPage('homePage');
+        const homeInput = document.getElementById('searchInput');
+        if (homeInput) homeInput.value = '';
+    }
 }
 
-function initializeSearchPage() {
-    const lastSearch = localStorage.getItem('lastSearch') || '';
+function initializeSearchPage(query) {
     const input = document.getElementById('searchInput2');
     
-    if (lastSearch && input) {
-        input.value = lastSearch;
-        performSearch(lastSearch);
+    if (query) {
+        input.value = query;
+        performSearch(query);
     } else {
-        // Affiche tous les paquets par défaut
+        input.value = '';
         displaySearchResults(packages, '');
         const countEl = document.getElementById('resultsCount');
         if (countEl) countEl.textContent = `${packages.length} packages`;
@@ -338,10 +348,9 @@ function renderRecentPackages() {
             <span class="package-desc">${pkg.description}</span>
             <span class="package-date">${pkg.addedAt}</span>
         </div>`).join('');
-    
-    // Deux vitesses distinctes à ajuster selon le rendu visuel souhaité
-    const pxPerSecondDesktop = 32;  // Vitesse PC (pixels/seconde)
-    const pxPerSecondMobile = 25;   // Vitesse Mobile (plus petit = défilement plus lent)
+
+    const pxPerSecondDesktop = 32;
+    const pxPerSecondMobile = 25;
     
     const pxPerSecond = isMobile ? pxPerSecondMobile : pxPerSecondDesktop;
     
@@ -407,23 +416,20 @@ function handleSearch(e) {
     e.preventDefault();
     const input = e.target.querySelector('input');
     const query = input.value.trim();
-    performSearch(query);
+
+    if (!query) {
+        window.location.hash = '#/search';
+    } else {
+        window.location.hash = `#/search?q=${encodeURIComponent(query)}`;
+    }
     return false;
 }
 
 function searchByTag(tag) {
-    navigateTo('search');
-    const inp = document.getElementById('searchInput2');
-    if (inp) inp.value = `tag:${tag}`;
-    performSearch(`tag:${tag}`);
+    window.location.hash = `#/search?q=${encodeURIComponent('tag:' + tag)}`;
 }
 
 function performSearch(query) {
-    // Mémorise la recherche
-    if (query !== undefined) {
-        localStorage.setItem('lastSearch', query);
-    }
-    
     showSearchSkeleton();
     let results = [...packages];
     
@@ -443,9 +449,10 @@ function performSearch(query) {
         }
     }
     
-    displaySearchResults(results, query || '');
-    const countEl = document.getElementById('resultsCount');
-    if (countEl) countEl.textContent = `${results.length}/${packages.length} packages`;
+    displaySearchResults(results, query);
+
+    const input = document.getElementById('searchInput2');
+    if (input && query !== undefined) input.value = query;
 }
 
 function displaySearchResults(results, query) {

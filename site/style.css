@@ -99,23 +99,28 @@ header .container {
 .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     color: var(--text-primary);
     font-family: 'Recursive', monospace;
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 1.8rem;
 }
 
 .logo:hover { color: var(--text-primary); }
 
 .feather {
-    width: 26px;
-    height: 26px;
+    width: 34px;
+    height: 34px;
     color: var(--accent-blue);
     transition: transform 0.5s ease;
 }
 
 .logo:hover .feather { transform: rotate(-15deg) scale(1.1); }
+
+.logo span {
+    font-variation-settings: 'CASL' 1, 'wght' 800;
+    font-size: 1.6rem;
+}
 
 nav {
     display: flex;
@@ -564,7 +569,15 @@ body.dark .moon-icon { display: none; }
 
 .detail-header { margin-bottom: 30px; }
 
-.detail-header h1 { font-size: 2rem; color: var(--accent-blue); margin-bottom: 10px; }
+.detail-header h1 { 
+    font-size: clamp(2rem, 10vw, 4rem);
+    color: var(--accent-blue); 
+    margin-bottom: 10px;
+    line-height: 1.2;
+    word-break: break-word;
+    font-variation-settings: 'CASL' 1, 'wght' 700;
+    letter-spacing: -0.02em;
+}
 
 .detail-desc {
     color: var(--text-secondary);
@@ -905,4 +918,63 @@ body.light {
 ::selection {
     background: rgba(59, 130, 246, 0.3);
     color: var(--text-primary);
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-icon {
+    width: 16px;
+    height: 16px;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.nav-link:hover .nav-icon {
+    opacity: 1;
+}
+
+@media (max-width: 480px) {
+    .nav-link span {
+        display: none;
+    }
+    .nav-link {
+        padding: 8px;
+    }
+}
+
+.about-image {
+    margin: 25px auto 35px;
+    max-width: 100%;
+    width: 700px; /* Limite la largeur sur PC pour éviter l'étirement */
+    overflow: hidden;
+    line-height: 0; /* Évite les espaces blancs sous l'image */
+}
+
+.about-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    /* Garde la netteté maximale */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+/* Sur PC grand écran : image plus petite et centrée */
+@media (min-width: 1024px) {
+    .about-image {
+        width: 600px; /* Réduit la taille sur grand écran pour la netteté */
+    }
+}
+
+/* Sur mobile : pleine largeur */
+@media (max-width: 768px) {
+    .about-image {
+        width: 100%;
+        border-radius: 8px;
+        margin: 20px 0 30px;
+    }
 }
