@@ -25,6 +25,11 @@ Edit `packages.json`:
 }
 ```
 
+## Metadata accuracy (Tclib/Tklib):
+
+Please note that despite best efforts, some packages may have incorrect license or author information due to the automated nature of data collection. For any inaccuracies this may have caused.   
+If you spot an error in attribution or licensing for this project, please contact me so I can rectify it immediately. Your contributions to the Tcl/Tk ecvalued and deserve proper recognition.
+
 ## Credits
 
 Developed with assistance from [Kimi](https://kimi.moonshot.cn) (Moonshot AI).
