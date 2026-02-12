@@ -10,7 +10,7 @@
         "license": "Tcl/Tk License"
       }
     ],
-    "tags": ["tcllib", "standard", "crypto", "cipher"],
+    "tags": ["tcllib", "crypto", "cipher"],
     "description": "Implementation of the AES block cipher"
   },
   {
