@@ -5,10 +5,12 @@ let funFacts = [];
 
 async function loadPackagesData() {
     try {
+        showSkeleton();
+
         const response = await fetch('./packages.json');
         if (!response.ok) throw new Error('Erreur chargement');
         const data = await response.json();
-        
+
         packages = data.map(pkg => {
             const primarySource = pkg.sources[0];
             let repoShortName = '';
@@ -20,7 +22,7 @@ async function loadPackagesData() {
                     repoShortName = primarySource.url;
                 }
             }
-            
+
             return {
                 name: pkg.name,
                 description: pkg.description,
@@ -34,14 +36,22 @@ async function loadPackagesData() {
                 web: primarySource.web || primarySource.url
             };
         });
-        
+
         calculateMetrics();
         generateExploreTags();
         generateFunFacts();
         renderInterface();
-        
+
+        hideSkeleton();
+
     } catch (error) {
         console.error('Erreur:', error);
+        hideSkeleton();
+        const skPkg = document.getElementById('skeletonPackages');
+        if (skPkg) {
+            skPkg.style.display = 'flex';
+            skPkg.innerHTML = '<p style="color:var(--text-secondary);padding:20px;font-size:0.85rem;">Impossible de charger les données.</p>';
+        }
     }
 }
 
@@ -49,12 +59,12 @@ function calculateMetrics() {
     const allTags = {};
     const allAuthors = {};
     const allDomains = {};
-    
+
     packages.forEach(pkg => {
         pkg.tags.forEach(tag => {
             allTags[tag] = (allTags[tag] || 0) + 1;
         });
-        
+
         pkg.sources.forEach(src => {
             if (src.author) {
                 if (!allAuthors[src.author]) {
@@ -63,7 +73,7 @@ function calculateMetrics() {
                 allAuthors[src.author].count++;
             }
         });
-        
+
         if (pkg.web) {
             try {
                 const domain = new URL(pkg.web).hostname;
@@ -71,21 +81,21 @@ function calculateMetrics() {
             } catch (e) {}
         }
     });
-    
+
     const topTags = Object.entries(allTags)
         .map(([name, count]) => ({ name, count }))
         .sort((a, b) => b.count - a.count)
         .slice(0, 20);
-    
+
     const topAuthors = Object.entries(allAuthors)
         .map(([name, data]) => ({ name, count: data.count, url: data.url }))
         .sort((a, b) => b.count - a.count)
         .slice(0, 20);
-    
+
     const domains = Object.entries(allDomains)
         .map(([name, count]) => ({ name, count }))
         .sort((a, b) => b.count - a.count);
-    
+
     metrics = {
         total: packages.length,
         authors: Object.keys(allAuthors).length,
@@ -118,10 +128,18 @@ function renderInterface() {
 
 document.addEventListener('DOMContentLoaded', function() {
     loadTheme();
+    showSkeleton();
     loadPackagesData().then(() => {
+        let scrollTicking = false;
         window.addEventListener('scroll', () => {
-            const header = document.getElementById('header');
-            header.classList.toggle('scrolled', window.scrollY > 30);
+            if (!scrollTicking) {
+                requestAnimationFrame(() => {
+                    const header = document.getElementById('header');
+                    header.classList.toggle('scrolled', window.scrollY > 30);
+                    scrollTicking = false;
+                });
+                scrollTicking = true;
+            }
         });
         window.addEventListener('hashchange', handleHashChange);
         handleHashChange();
@@ -144,10 +162,27 @@ function handleHashChange() {
     const hash = window.location.hash || '#/';
     if (hash.startsWith('#/pkg/')) {
         showPackageDetail(decodeURIComponent(hash.replace('#/pkg/', '')), false);
-    } else if (hash === '#/search') showPage('searchPage');
-    else if (hash === '#/metrics') showPage('metricsPage');
+    } else if (hash === '#/search') {
+        showPage('searchPage');
+        initializeSearchPage();
+    } else if (hash === '#/metrics') showPage('metricsPage');
     else if (hash === '#/about') showPage('aboutPage');
     else showPage('homePage');
+}
+
+function initializeSearchPage() {
+    const lastSearch = localStorage.getItem('lastSearch') || '';
+    const input = document.getElementById('searchInput2');
+    
+    if (lastSearch && input) {
+        input.value = lastSearch;
+        performSearch(lastSearch);
+    } else {
+        // Affiche tous les paquets par défaut
+        displaySearchResults(packages, '');
+        const countEl = document.getElementById('resultsCount');
+        if (countEl) countEl.textContent = `${packages.length} packages`;
+    }
 }
 
 function navigateTo(page) {
@@ -182,12 +217,12 @@ function extractShortUrl(url, type) {
 function showPackageDetail(pkgName, updateHash = true) {
     const pkg = packages.find(p => p.name === pkgName);
     if (!pkg) { console.error('Package not found:', pkgName); return; }
-    
+
     const sourcesCards = pkg.sources.map((src, index) => {
         const hasDifferentWeb = src.web && src.web !== src.url;
         const shortRepo = extractShortUrl(src.url, 'repo');
         const shortDoc = hasDifferentWeb ? extractShortUrl(src.web, 'doc') : null;
-        
+
         return `
         <div class="source-card ${index === 0 ? 'primary' : ''}">
             <div class="source-header">
@@ -231,10 +266,10 @@ function showPackageDetail(pkgName, updateHash = true) {
             </div>
         </div>`;
     }).join('');
-    
+
     const container = document.getElementById('packageDetail');
     if (!container) return;
-    
+
     container.innerHTML = `
         <div class="package-detail">
             <div class="detail-header">
@@ -249,29 +284,74 @@ function showPackageDetail(pkgName, updateHash = true) {
                 ${pkg.tags.map(t => `<span class="tag" onclick="searchByTag('${t}')">${t}</span>`).join('')}
             </div>
         </div>`;
-    
+
     showPage('packagePage');
     if (updateHash) window.location.hash = `#/pkg/${encodeURIComponent(pkgName)}`;
 }
 
 function renderExploreTags() {
     const el = document.getElementById('exploreTags');
-    if (el) el.innerHTML = exploreTags.map(tag => 
+    if (el) el.innerHTML = exploreTags.map(tag =>
         `<span class="tag" onclick="searchByTag('${tag}')">${tag}</span>`
     ).join('');
+}
+
+function showSkeleton() {
+    const skPkg = document.getElementById('skeletonPackages');
+    const realPkg = document.getElementById('packagesScrollContainer');
+    if (skPkg)  skPkg.style.display  = 'flex';
+    if (realPkg) realPkg.style.display = 'none';
+    const skVer = document.getElementById('skeletonVersions');
+    const realVer = document.getElementById('recentVersions');
+    if (skVer)  skVer.style.display  = 'flex';
+    if (realVer) realVer.style.display = 'none';
+    const tagsEl = document.getElementById('exploreTags');
+    if (tagsEl) tagsEl.innerHTML = [0,1,2,3,4,5,6,7,8,9].map(i =>
+        `<span class="skeleton-tag-sm" style="--i:${i}"></span>`
+    ).join('');
+}
+
+function hideSkeleton() {
+    const skPkg = document.getElementById('skeletonPackages');
+    const realPkg = document.getElementById('packagesScrollContainer');
+    if (skPkg)  skPkg.style.display  = 'none';
+    if (realPkg) realPkg.style.display = 'block';
+    const skVer = document.getElementById('skeletonVersions');
+    const realVer = document.getElementById('recentVersions');
+    if (skVer)  skVer.style.display  = 'none';
+    if (realVer) realVer.style.display = 'flex';
 }
 
 function renderRecentPackages() {
     const el = document.getElementById('recentPackages');
     if (!el) return;
     const sorted = [...packages].sort((a, b) => new Date(b.addedAt) - new Date(a.addedAt));
-    const dup = [...sorted, ...sorted];
+    const isMobile = window.innerWidth <= 768;
+    const totalItems = sorted.length;
+    const displayCount = isMobile ? Math.min(20, totalItems) : totalItems;
+    const limited = sorted.slice(0, displayCount);
+    const dup = [...limited, ...limited];
+    
     el.innerHTML = dup.map(pkg => `
         <div class="package-item" onclick="showPackageDetail('${pkg.name.replace(/'/g, "\\'")}')">
             <span class="package-name">${pkg.name}</span>
             <span class="package-desc">${pkg.description}</span>
             <span class="package-date">${pkg.addedAt}</span>
         </div>`).join('');
+    
+    // Deux vitesses distinctes à ajuster selon le rendu visuel souhaité
+    const pxPerSecondDesktop = 32;  // Vitesse PC (pixels/seconde)
+    const pxPerSecondMobile = 25;   // Vitesse Mobile (plus petit = défilement plus lent)
+    
+    const pxPerSecond = isMobile ? pxPerSecondMobile : pxPerSecondDesktop;
+    
+    requestAnimationFrame(() => {
+        const totalHeight = el.scrollHeight;
+        const cycleHeight = totalHeight / 2;
+        const duration = cycleHeight / pxPerSecond;
+        
+        el.style.animationDuration = `${duration}s`;
+    });
 }
 
 function renderRecentVersions() {
@@ -286,8 +366,8 @@ function renderRecentVersions() {
 }
 
 function renderMetrics() {
-    const ids = ['metricTotal', 'metricAuthors', 'metricDeleted', 'metricUnreachable', 
-                 'metricAlias', 'metricVersioned', 'metricExecutables', 'metricTeacup', 
+    const ids = ['metricTotal', 'metricAuthors', 'metricDeleted', 'metricUnreachable',
+                 'metricAlias', 'metricVersioned', 'metricExecutables', 'metricTeacup',
                  'metricYear', 'metricMonth'];
     ids.forEach(id => {
         const el = document.getElementById(id);
@@ -296,16 +376,16 @@ function renderMetrics() {
             el.textContent = (metrics[key] || 0).toLocaleString();
         }
     });
-    
+
     const tagsTable = document.getElementById('tagsTable');
     if (tagsTable) tagsTable.innerHTML = metrics.topTags.map(tag => `
         <tr><td><a href="#/search" onclick="searchByTag('${tag.name}'); return false;">${tag.name}</a></td>
         <td class="num">${tag.count}</td></tr>`).join('');
-    
+
     const authorsTable = document.getElementById('authorsTable');
     if (authorsTable) authorsTable.innerHTML = metrics.topAuthors.map(author => `
         <tr><td>${author.name}</td><td class="num">${author.count}</td></tr>`).join('');
-    
+
     const domainsTable = document.getElementById('domainsTable');
     if (domainsTable) domainsTable.innerHTML = metrics.domains.map(domain => `
         <tr><td>${domain.name}</td><td class="num">${domain.count}</td></tr>`).join('');
@@ -326,9 +406,7 @@ function rotateFunFacts() {
 function handleSearch(e) {
     e.preventDefault();
     const input = e.target.querySelector('input');
-    const query = input.value.trim().toLowerCase();
-    if (!query) return false;
-    navigateTo('search');
+    const query = input.value.trim();
     performSearch(query);
     return false;
 }
@@ -341,30 +419,53 @@ function searchByTag(tag) {
 }
 
 function performSearch(query) {
-    let results = [...packages];
-    if (query.startsWith('tag:')) {
-        const t = query.replace('tag:', '').toLowerCase();
-        results = results.filter(p => p.tags.some(tag => tag.toLowerCase().includes(t)));
-    } else {
-        results = results.filter(p =>
-            p.name.toLowerCase().includes(query) ||
-            p.description.toLowerCase().includes(query) ||
-            p.tags.some(t => t.toLowerCase().includes(query)) ||
-            p.sources.some(s => s.author && s.author.toLowerCase().includes(query))
-        );
+    // Mémorise la recherche
+    if (query !== undefined) {
+        localStorage.setItem('lastSearch', query);
     }
-    displaySearchResults(results, query);
+    
+    showSearchSkeleton();
+    let results = [...packages];
+    
+    const trimmedQuery = query ? query.trim().toLowerCase() : '';
+    
+    if (trimmedQuery) {
+        if (trimmedQuery.startsWith('tag:')) {
+            const t = trimmedQuery.replace('tag:', '');
+            results = results.filter(p => p.tags.some(tag => tag.toLowerCase().includes(t)));
+        } else {
+            results = results.filter(p =>
+                p.name.toLowerCase().includes(trimmedQuery) ||
+                p.description.toLowerCase().includes(trimmedQuery) ||
+                p.tags.some(t => t.toLowerCase().includes(trimmedQuery)) ||
+                p.sources.some(s => s.author && s.author.toLowerCase().includes(trimmedQuery))
+            );
+        }
+    }
+    
+    displaySearchResults(results, query || '');
+    const countEl = document.getElementById('resultsCount');
+    if (countEl) countEl.textContent = `${results.length}/${packages.length} packages`;
 }
 
 function displaySearchResults(results, query) {
     const countEl = document.getElementById('resultsCount');
-    if (countEl) countEl.textContent = `${results.length}/${packages.length} packages`;
+    if (countEl) {
+        if (query && query.trim() !== '') {
+            countEl.textContent = `${results.length}/${packages.length} packages matching "${query}"`;
+        } else {
+            countEl.textContent = `${results.length} packages`;
+        }
+    }
+    
     const container = document.getElementById('searchResults');
     if (!container) return;
+    
     if (results.length === 0) {
         container.innerHTML = '<p style="color: var(--text-secondary);">No packages found.</p>';
         return;
     }
+    
     container.innerHTML = results.map(pkg => `
         <div class="result-item" onclick="showPackageDetail('${pkg.name.replace(/'/g, "\\'")}')">
             <div class="result-header">
@@ -382,17 +483,31 @@ function displaySearchResults(results, query) {
         </div>`).join('');
 }
 
+function showSearchSkeleton() {
+    const container = document.getElementById('searchResults');
+    if (!container) return;
+    container.innerHTML = [0,1,2,3,4].map(i =>
+        `<div class="skeleton-result" style="--i:${i}"></div>`
+    ).join('');
+}
+
 function sortResults() {
     const sortBy = document.getElementById('sortSelect')?.value;
-    const query = document.getElementById('searchInput2')?.value.trim().toLowerCase();
-    if (!query || !sortBy) return;
+    const query = document.getElementById('searchInput2')?.value.trim() || '';
+    
     let results = [...packages];
+    
     if (query.startsWith('tag:')) {
         const t = query.replace('tag:', '').toLowerCase();
         results = results.filter(p => p.tags.some(tag => tag.toLowerCase().includes(t)));
-    } else {
-        results = results.filter(p => p.name.toLowerCase().includes(query) || p.description.toLowerCase().includes(query));
+    } else if (query) {
+        const lowerQuery = query.toLowerCase();
+        results = results.filter(p => 
+            p.name.toLowerCase().includes(lowerQuery) || 
+            p.description.toLowerCase().includes(lowerQuery)
+        );
     }
+    
     const sorts = {
         recent: (a, b) => new Date(b.addedAt) - new Date(a.addedAt),
         oldest: (a, b) => new Date(a.addedAt) - new Date(b.addedAt),
@@ -402,6 +517,7 @@ function sortResults() {
     results.sort(sorts[sortBy] || sorts.az);
     displaySearchResults(results, query);
 }
+
 
 function toggleFilter(btn) { btn.classList.toggle('active'); }
 
@@ -413,3 +529,4 @@ window.handleSearch = handleSearch;
 window.searchByTag = searchByTag;
 window.sortResults = sortResults;
 window.toggleFilter = toggleFilter;
+window.showSearchSkeleton = showSearchSkeleton;
