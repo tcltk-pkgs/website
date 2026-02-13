@@ -6,7 +6,7 @@ A web interface to discover and search Tcl/Tk packages.
 
 ## Adding a package :
 
-Edit `packages.json`:
+Submit a PR with your package information. Simply add an entry to the `packages.json` file following this format:
 
 ```json
 {
@@ -24,11 +24,8 @@ Edit `packages.json`:
   "description": "Description here"
 }
 ```
-
-## Metadata accuracy (Tclib/Tklib):
-
-Please note that despite best efforts, some packages may have incorrect license or author information due to the automated nature of data collection. For any inaccuracies this may have caused.   
-If you spot an error in attribution or licensing for this project, please contact me so I can rectify it immediately. Your contributions to the Tcl/Tk ecvalued and deserve proper recognition.
+> [!NOTE]  
+> `method` can be `git`, or `fossil` for now. The `web` field is optional and points to documentation if different from the repository `URL`.
 
 ## Credits
 
