@@ -154,6 +154,48 @@
     "description": "bench - Processing benchmark suites"
   },
   {
+    "name": "bench::in",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/bench&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/tcllib-2-0/embedded/md/tcllib/files/modules/bench/bench_read.md",
+        "author": "Andreas Kupries",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "benchmark", "testing"],
+    "description": "bench - Reading benchmark results"
+  },
+  {
+    "name": "bench::out::csv",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/bench&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/tcllib-2-0/embedded/md/tcllib/files/modules/bench/bench_wcsv.md",
+        "author": "Andreas Kupries",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "benchmark", "testing"],
+    "description": "bench - Formatting benchmark results as CSV"
+  },
+  {
+    "name": "bench::out::text",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/bench&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/tcllib-2-0/embedded/md/tcllib/files/modules/bench/bench_wcsv.md",
+        "author": "Andreas Kupries",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "benchmark", "testing"],
+    "description": "bench - Formatting benchmark results as human readable text"
+  },
+  {
     "name": "bibtex",
     "sources": [
       {
@@ -230,7 +272,7 @@
         "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/clock&ci=trunk",
         "method": "fossil",
         "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/clock/rfc2822.md",
-        "author": "tcltk",
+        "author": "Tcllib Contributors",
         "license": "Tcl/Tk License"
       }
     ],
@@ -272,7 +314,7 @@
         "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/control&ci=trunk",
         "method": "fossil",
         "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/control/control.md",
-        "author": "tcltk",
+        "author": "Tcllib Contributors",
         "license": "Tcl/Tk License"
       }
     ],
@@ -416,8 +458,50 @@
         "license": "Tcl/Tk License"
       }
     ],
-    "tags": ["tcllib", "debug", "logging"],
+    "tags": ["tcllib", "debugging", "logging"],
     "description": "debug narrative - core"
+  },
+  {
+    "name": "debug::caller",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/debug&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/tcllib-2-0/embedded/md/tcllib/files/modules/debug/debug_caller.md",
+        "author": "Andreas Kupries",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "debugging", "logging", "tracing"],
+    "description": "debug narrative - caller"
+  },
+  {
+    "name": "debug::heartbeat",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/debug&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/tcllib-2-0/embedded/md/tcllib/files/modules/debug/debug_heartbeat.md",
+        "author": "Andreas Kupries",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "debugging", "logging", "tracing"],
+    "description": "debug narrative - heartbeat"
+  },
+  {
+    "name": "debug::timestamp ",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/debug&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/tcllib-2-0/embedded/md/tcllib/files/modules/debug/debug_timestamp.md",
+        "author": "Andreas Kupries",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "debugging", "logging", "tracing", "timestamps"],
+    "description": "debug narrative - timestamping"
   },
   {
     "name": "defer",
@@ -878,7 +962,7 @@
         "license": "Tcl/Tk License"
       }
     ],
-    "tags": ["tcllib", "math", "library"],
+    "tags": ["tcllib", "math"],
     "description": "Tcl Math Library"
   },
   {
@@ -892,7 +976,7 @@
         "license": "Tcl/Tk License"
       }
     ],
-    "tags": ["tcllib", "math", "bigfloat", "precision"],
+    "tags": ["tcllib", "math", "floating-point", "precision", "arithmetic"],
     "description": "Arbitrary precision floating-point numbers"
   },
   {
@@ -916,12 +1000,390 @@
         "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
         "method": "fossil",
         "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/statistics.md",
-        "author": "tcltk",
+        "author": "Tcllib Contributors",
         "license": "Tcl/Tk License"
       }
     ],
-    "tags": ["tcllib", "math", "statistics"],
+    "tags": ["tcllib", "math", "statistics", "descriptive", "probability", "analysis"],
     "description": "Basic statistical functions and procedures"
+  },
+  {
+    "name": "math::calculus",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/calculus.md",
+        "author": "Arjen Markus",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "calculus", "integration", "ode", "differential-equations"],
+    "description": "Integration and ordinary differential equations"
+  },
+  {
+    "name": "math::calculus::romberg",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/romberg.md",
+        "author": "Kevin B. Kenny",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "calculus", "integration", "romberg", "numerical-analysis"],
+    "description": "Romberg integration"
+  },
+  {
+    "name": "math::calculus::symdiff",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/symdiff.md",
+        "author": "Kevin B. Kenny",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "calculus", "differentiation", "symbolic", "algebra"],
+    "description": "Symbolic differentiation for Tcl"
+  },
+  {
+    "name": "math::changepoint",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/changepoint.md",
+        "author": "Arjen Markus",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "statistics", "changepoint", "detection", "analysis"],
+    "description": "Change point detection methods"
+  },
+  {
+    "name": "math::combinatorics",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/combinatorics.md",
+        "author": "Kevin B. Kenny",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "combinatorics", "combinatorial", "permutations", "factorial"],
+    "description": "Combinatorial functions in the Tcl Math Library"
+  },
+  {
+    "name": "math::complexnumbers",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/qcomplex.md",
+        "author": "Arjen Markus",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "complex", "numbers", "imaginary", "arithmetic"],
+    "description": "Straightforward complex number package"
+  },
+  {
+    "name": "math::constants",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/constants.md",
+        "author": "Arjen Markus",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "constants", "pi", "physics", "values"],
+    "description": "Mathematical and numerical constants"
+  },
+  {
+    "name": "math::decimal",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/decimal.md",
+        "author": "Mark Alston",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "decimal", "arithmetic", "precision", "finance"],
+    "description": "General decimal arithmetic"
+  },
+  {
+    "name": "math::exact",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/exact.md",
+        "author": "Kevin B. Kenny",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "exact", "real", "arithmetic", "precision", "computation"],
+    "description": "Exact Real Arithmetic"
+  },
+  {
+    "name": "math::figurate",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/figurate.md",
+        "author": "Tcllib Contributors",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "figurate", "numbers", "polygonal", "number-theory"],
+    "description": "Evaluate figurate numbers"
+  },
+  {
+    "name": "math::filters",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/filtergen.md",
+        "author": "Arjen Markus",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "filters", "digital", "signal-processing", "dsp"],
+    "description": "Digital filters"
+  },
+  {
+    "name": "math::fourier",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/fourier.md",
+        "author": "Tcllib Contributors",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "fourier", "transform", "fft", "dft", "signal-processing"],
+    "description": "Discrete and fast fourier transforms"
+  },
+  {
+    "name": "math::fuzzy",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/fuzzy.md",
+        "author": "Tcllib Contributors",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "fuzzy", "floating-point", "comparison", "tolerance"],
+    "description": "Fuzzy comparison of floating-point numbers"
+  },
+  {
+    "name": "math::geometry",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/math_geometry.md",
+        "author": "Manfred Rosenberger",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "geometry", "2d", "computational-geometry"],
+    "description": "Geometrical computations"
+  },
+  {
+    "name": "math::interpolate",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/interpolate.md",
+        "author": "Kevin B. Kenny",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "interpolation", "spline", "linear", "numerical"],
+    "description": "Interpolation routines"
+  },
+  {
+    "name": "math::linearalgebra",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/linalg.md",
+        "author": "Michael Buadin",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "linear-algebra", "matrix", "vector", "eigenvalues"],
+    "description": "Linear Algebra"
+  },
+  {
+    "name": "math::machineparameters",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/machineparameters.md",
+        "author": "Michael Baudin",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "machine-parameters", "floating-point", "precision"],
+    "description": "Compute double precision machine parameters"
+  },
+  {
+    "name": "math::numtheory",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/numtheory.md",
+        "author": "Lars Hellström",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "number-theory", "prime", "modular"],
+    "description": "Number Theory"
+  },
+  {
+    "name": "math::optimize",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/optimize.md",
+        "author": "Kevin B. Kenny",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "optimization", "minimum", "maximum", "numerical"],
+    "description": "Optimisation routines"
+  },
+  {
+    "name": "math::PCA",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/pca.md",
+        "author": "Tcllib Contributors",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "pca", "statistics", "analysis", "multivariate"],
+    "description": "Package for Principal Component Analysis"
+  },
+  {
+    "name": "math::polynomials",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/polynomials.md",
+        "author": "Arjen Markus",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "polynomials", "algebra", "roots", "equations"],
+    "description": "Polynomial functions"
+  },
+  {
+    "name": "math::probopt",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/probopt.md",
+        "author": "Tcllib Contributors",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "optimization", "probabilistic"],
+    "description": "Probabilistic optimisation methods"
+  },
+  {
+    "name": "math::quasirandom",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/quasirandom.md",
+        "author": "Tcllib Contributors",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "quasi-random", "monte-carlo", "integration", "low-discrepancy"],
+    "description": "Quasi-random points for integration and Monte Carlo type methods"
+  },
+  {
+    "name": "math::rationalfunctions",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/rational_funcs.md",
+        "author": "Arjen Markus",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "rational", "fractions", "algebra"],
+    "description": "Rational functions"
+  },
+  {
+    "name": "math::roman",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/roman.md",
+        "author": "Kenneth Green",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "roman", "numerals", "conversion", "ancient"],
+    "description": "Tools for creating and manipulating roman numerals"
+  },
+  {
+    "name": "math::special",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/special.md",
+        "author": "Arjen Markus",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "special"],
+    "description": "Special mathematical functions"
+  },
+  {
+    "name": "math::trig",
+    "sources": [
+      {
+        "url": "https://core.tcl-lang.org/tcllib/dir?name=modules/math&ci=trunk",
+        "method": "fossil",
+        "web": "https://core.tcl-lang.org/tcllib/doc/trunk/embedded/md/tcllib/files/modules/math/trig.md",
+        "author": "Arjen Markus",
+        "license": "Tcl/Tk License"
+      }
+    ],
+    "tags": ["tcllib", "math", "trigonometric", "hyperbolic", "sin", "cos", "tan"],
+    "description": "Trigonometric and hyperbolic functions"
   },
   {
     "name": "md5",
