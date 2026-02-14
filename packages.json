@@ -3276,28 +3276,5 @@
             "archive",
             "zip"
         ]
-    },
-    {
-        "name": "ticklecharts",
-        "description": "Tcl wrapper around Apache ECharts.",
-        "sources": [
-            {
-                "url": "https://github.com/nico-robert/ticklecharts",
-                "method": "git",
-                "web": "https://github.com/nico-robert/ticklecharts/README.md",
-                "author": "Nicolas ROBERT",
-                "license": "MIT",
-                "reachable": true,
-                "archived": false,
-                "latest_release": "v3.2.6",
-                "last_commit": "2025-07-04 16:12:10",
-                "last_tag": "v3.2.8",
-                "last_commit_sha": "b49f014"
-            }
-        ],
-        "tags": [
-            "web",
-            "charts"
-        ]
     }
 ]
