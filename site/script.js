@@ -3,10 +3,12 @@ let metrics = {};
 let exploreTags = [];
 let funFacts = [];
 
-// Icône Fossil SCM - hérite de la couleur du parent (white dans le badge)
+const REGISTRY_URL = './packages.json';
+// const REGISTRY_URL = 'https://cdn.jsdelivr.net/gh/tcltk-pkgs/registry@main/packages.json';
+
 function getFossilIcon() {
-    return `<svg class="method-icon" width="32" height="32" viewBox="0 0 32 32" fill="currentColor" 
-        style="vertical-align: middle; display: inline-block;" 
+    return `<svg class="method-icon" width="32" height="32" viewBox="0 0 32 32" fill="currentColor"
+        style="vertical-align: middle; display: inline-block;"
         xmlns="http://www.w3.org/2000/svg">
         <path d="M10.242,17.981,10.2,17.97l-.042-.022-.039-.028-.036-.036-.036-.045-.034-.05-.059-.126L9.9,17.508l-.042-.179-.034-.2L9.8,16.9l-.02-.509.02-.576.056-.632.1-.669.137-.663.159-.613.179-.548.193-.473.1-.2.1-.179.1-.151.1-.126.1-.1.05-.039.048-.028.048-.022.048-.014.048,0,.045,0,.045.011.042.022.039.028.039.036.034.045.034.05.062.126.05.154.042.179.034.2.025.224.02.509-.017.576-.059.632-.1.669-.134.663L11.4,16.1l-.179.548-.193.473-.1.2-.1.179-.1.154-.1.126-.1.1-.05.036-.048.031-.048.022-.048.011-.048.006Z"/>
         <path d="M11.361,23.548l-.042.006-.045,0-.045-.008-.045-.014-.048-.022-.045-.031L11,23.4l-.1-.1-.1-.12-.1-.145-.1-.165-.187-.383-.173-.448-.157-.5-.134-.546-.1-.554L9.8,19.911l-.022-.481L9.789,19l.02-.187.031-.171.039-.154.048-.129.056-.109.031-.045.031-.039.036-.031.036-.028.039-.02.042-.011.042-.006.045,0,.045.008.045.014.048.022.048.028.1.076.1.1.1.123.1.145.1.162.185.383.176.45.157.5.134.548.1.554.059.523.022.478-.014.428-.02.187-.031.171-.039.151-.048.131-.056.109-.031.045-.031.039-.036.031-.036.028-.039.02Z"/>
@@ -14,7 +16,7 @@ function getFossilIcon() {
         <path d="M19.967,28.657l-.008.034-.017.034-.022.031-.028.031-.036.028-.042.025-.1.048-.126.042-.148.036-.168.028-.185.022-.422.022-.481-.006L17.656,29l-.56-.067-.557-.1-.512-.115-.462-.129-.4-.143L15,28.372l-.151-.073-.131-.076-.109-.076-.084-.076-.031-.039L14.461,28l-.02-.036-.011-.036-.006-.036v-.034l.008-.034.017-.034.022-.031.028-.031.036-.028.042-.025.1-.048.126-.042.148-.036.165-.028.187-.022.422-.022.478.006.526.036.56.067.557.1.515.115.462.129.4.143.173.076.151.073.131.076.109.076.084.076.031.039.028.036.02.036.011.036.006.036Z"/>
         <path d="M20.185,28.45l-.008-.028v-.031l.006-.031.008-.034.017-.036.022-.036.062-.078.081-.084.1-.087.255-.19.322-.2.38-.2.428-.2.467-.2.476-.173.453-.143.417-.106.372-.073.316-.036.134,0,.118.006.1.017.039.011.036.017.031.017.025.02.02.022.014.025.008.028v.031l-.006.031-.008.034-.017.036-.022.036-.062.078-.081.084-.1.087-.255.19-.325.2-.378.2-.431.2-.467.2-.476.173-.45.143-.417.106-.372.073-.316.036-.134,0-.118-.006-.1-.017-.039-.011-.036-.017-.031-.017-.025-.02-.02-.022Z"/>
         <path d="M24.8,26.492l-.006-.006-.006-.006-.006-.014-.006-.02V26.4l0-.028.017-.059.025-.067.034-.078.1-.179.129-.2.159-.224.187-.241.21-.249.218-.241.213-.218.2-.187.185-.157.162-.118.073-.045.064-.034.056-.022.025-.008.022,0,.02,0,.02,0,.014.006.008,0,.006.006.006.006.006.006.006.014.006.02,0,.02,0,.022,0,.028-.014.059-.025.067-.034.078-.1.179-.129.2-.159.224-.187.241-.21.249-.218.241-.213.218-.2.187-.185.157-.162.118-.073.045-.064.034-.059.022-.025.008-.022,0-.02,0-.02,0-.014-.006-.008,0Z"/>
-        <path d="M12.746,27.815v-.1l0-.1,0-.1-.006-.1-.006-.1-.008-.1-.011-.1-.008-.092-.014-.09-.011-.087-.014-.087-.017-.081-.017-.081-.017-.076-.02-.076-.022-.07-.02-.064-.022-.064-.022-.059-.025-.053-.022-.05-.025-.048-.028-.039-.025-.036-.028-.034-.028-.028L12.3,25.9l-.028-.017-.028-.011-.028-.008-.028,0h0l-.028,0-.028.008-.028.011-.028.017-.028.022-.028.028-.028.034-.025.036-.028.039-.025.048-.022.05-.025.053-.022.059-.022.064-.02.064-.022.07-.02.076-.017.076-.017.081-.017.081-.014.087-.011.087-.014.09-.008.092-.011.1-.008.1-.006.1-.006.1,0,.1,0,.1v.1h0v.1l0,.1,0,.1.006.1.006.1.008.1.011.1.008.092.014.09.011.087.014.087.017.081.017.081.017.076.02.076.022.07.02.064.022.064.022.059.025.053.022.05.025.048.028.039.025.036.028.034.028.028.028.022.028.017.028.011.028.008.028,0h0l.028,0,.028-.008.028-.011.028-.017.028-.022.028-.028.028-.034.025-.036.028-.039.025-.048.022-.05.025-.053.022-.059.022-.064.02-.064.022-.07.02-.076.017-.076.017-.081.017-.081.014-.087.011-.087.014-.09.008-.092.011-.1.008-.1.006-.1.006-.1,0-.1,0-.1Z"/>
+        <path d="M12.746,27.815v-.1l0-.1,0-.1-.006-.1-.006-.1-.008-.1-.011-.1-.008-.092-.014-.09-.011-.087-.014-.087-.017-.081-.017-.081-.017-.076-.02-.076-.022-.07-.02-.064-.022-.064-.022-.059-.025-.053-.022-.05-.025-.048-.028-.039-.025-.036-.028-.034-.028-.028L12.3,25.9l-.028-.017-.028-.011-.028-.008-.028,0h0l-.028,0-.028.008-.028.011-.028.017-.028.022-.028.028-.028.034-.025.036-.028.039-.025.048-.022.05-.025.053-.022.059-.022.064-.02.064-.022.07-.02.076-.017.076-.017.081-.017.081-.014.087-.011.087-.014.09-.008.092-.011.1-.008.1-.006.1-.006.1,0,.1,0,.1v.1h0v.1l0,.1,0,.1.006.1.006.1.008.1.011.1.008.092.014.09.011.087.014.087.017.081.017.081.017.076.02.076.022.07.02.064.022.064.022.059.025.053.022.05.025.048.028.039.025.036.028.034.028.028.028.022.028.017.028.011.028.008.028,0h0l.028,0,.028-.008.028-.011.028-.017.028-.022.028-.028.025-.034.025-.036.028-.039.025-.048.022-.05.025-.053.022-.059.022-.064.02-.064.022-.07.02-.076.017-.076.017-.081.017-.081.014-.087.011-.087.014-.09.008-.092.011-.1.008-.1.006-.1.006-.1,0-.1,0-.1Z"/>
         <path d="M11.971,29.913l-.017.022-.025.02-.025.017-.034.011-.034.008L11.795,30l-.09,0-.106-.011-.12-.022-.131-.034-.143-.045-.316-.126-.35-.165-.369-.2-.386-.238L9.411,28.9l-.336-.257-.294-.252-.241-.238-.1-.115-.084-.106-.07-.1-.05-.092L8.2,27.658l-.011-.039-.006-.036,0-.034,0-.034.008-.028.014-.025.02-.022.022-.02.028-.017.031-.011.036-.008.039-.006.092,0,.106.011.12.022.131.034.143.045.316.123.35.165.369.2.386.238.372.257.336.257.291.252.243.238.1.115.084.106.07.1.053.092.034.084.011.039.008.036v.034l0,.034-.008.028Z"/>
         <path d="M8.152,27.448l-.008.006-.008.006-.008.006-.011,0-.011,0H8.091l-.028,0-.034-.006-.036-.011-.039-.014-.042-.02-.09-.05-.1-.064-.1-.076-.1-.09-.1-.1L7.33,26.95l-.076-.09L7.2,26.777l-.022-.039-.02-.039-.014-.034-.011-.031L7.123,26.6v-.022l0-.011,0-.011.006-.008.006-.008.008-.006.008-.008.008,0,.011,0,.011,0h.042l.034.008.034.011.039.014.042.02.092.048.1.064.1.078.1.087.1.1.087.092.073.092.059.084.025.039.02.036.014.036.011.031,0,.028,0,.014,0,.011v.011l0,.011-.006.008Z"/>
         <path d="M26.964,23.929l-.006,0-.008-.006-.011-.011-.011-.017-.008-.017-.006-.022-.006-.025,0-.062,0-.073.008-.087.034-.2.059-.235.081-.263.1-.288.12-.3.134-.3.134-.271.134-.243.126-.2.118-.165.056-.067.05-.05.048-.039.02-.017.022-.011.017-.006.02-.006.017,0h.006l.008,0,.006,0,.008.006.011.011.008.017.008.017.006.022.006.025.006.062,0,.073-.008.087-.036.2-.059.235-.081.263-.1.288-.12.3-.131.3-.134.271-.134.243-.126.207-.118.162-.056.067-.05.05-.048.039-.02.017-.022.011-.017.006-.02.006-.017,0h-.006Z"/>
@@ -42,10 +44,9 @@ function getFossilIcon() {
     </svg>`;
 }
 
-// Icône GitHub - hérite de la couleur du parent (white dans le badge)
 function getGitHubIcon() {
-    return `<svg class="method-icon" viewBox="0 0 24 24" fill="currentColor" width="20" height="20" 
-        style="vertical-align: middle; display: inline-block;" 
+    return `<svg class="method-icon" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"
+        style="vertical-align: middle; display: inline-block;"
         xmlns="http://www.w3.org/2000/svg">
         <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
     </svg>`;
@@ -55,33 +56,50 @@ async function loadPackagesData() {
     try {
         showSkeleton();
 
-        const response = await fetch('./packages.json');
+        const response = await fetch(REGISTRY_URL);
         if (!response.ok) throw new Error('Erreur chargement');
         const data = await response.json();
 
-        packages = data.map(pkg => {
-            const primarySource = pkg.sources[0];
+        const validPackages = Array.isArray(data) ? data.filter(pkg => pkg && pkg.name) : [];
+
+        packages = validPackages.map(pkg => {
+            const primarySource = pkg.sources && pkg.sources[0] ? pkg.sources[0] : {};
+
+            const cleanUrl = (url) => url ? url.trim() : '';
+
             let repoShortName = '';
             if (primarySource.url) {
                 try {
-                    const url = new URL(primarySource.url);
+                    const url = new URL(cleanUrl(primarySource.url));
                     repoShortName = url.pathname.replace(/^\/|\/$/g, '');
                 } catch (e) {
-                    repoShortName = primarySource.url;
+                    repoShortName = cleanUrl(primarySource.url);
                 }
             }
 
             return {
                 name: pkg.name,
-                description: pkg.description,
+                description: pkg.description || '',
                 github: repoShortName,
                 tags: pkg.tags || [],
                 license: primarySource.license || 'Unknown',
-                sources: pkg.sources,
-                lastCommit: '0 days ago',
-                version: 'v1.0.0',
-                addedAt: new Date().toISOString().split('T')[0],
-                web: primarySource.web || primarySource.url
+                sources: (pkg.sources || []).map(src => ({
+                    ...src,
+                    url: cleanUrl(src.url),
+                    web: cleanUrl(src.web),
+                    author: src.author ? src.author.trim() : 'unknown',
+                    license: src.license ? src.license.trim() : 'Unknown'
+                })),
+
+                lastCommit: primarySource.last_commit || null,
+                lastCommitSha: primarySource.last_commit_sha || null,
+                reachable: primarySource.reachable !== false,
+                archived: primarySource.archived || false,
+                lastTag: primarySource.last_tag || null,
+
+                version: primarySource.last_tag || 'v1.0.0',
+                addedAt: primarySource.last_commit ? primarySource.last_commit.split(' ')[0] : new Date().toISOString().split('T')[0],
+                web: cleanUrl(primarySource.web) || cleanUrl(primarySource.url)
             };
         });
 
@@ -98,7 +116,7 @@ async function loadPackagesData() {
         const skPkg = document.getElementById('skeletonPackages');
         if (skPkg) {
             skPkg.style.display = 'flex';
-            skPkg.innerHTML = '<p style="color:var(--text-secondary);padding:20px;font-size:0.85rem;">Impossible de charger les données.</p>';
+            skPkg.innerHTML = '<p style="color:var(--text-secondary);padding:20px;font-size:0.85rem;">Impossible de charger les données depuis le registry.</p>';
         }
     }
 }
@@ -144,12 +162,39 @@ function calculateMetrics() {
         .map(([name, count]) => ({ name, count }))
         .sort((a, b) => b.count - a.count);
 
+    const now = new Date();
+    const oneYearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
+    const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+
+    const lastYear = packages.filter(p => {
+        if (!p.lastCommit) return false;
+        const date = new Date(p.lastCommit);
+        return date > oneYearAgo;
+    }).length;
+
+    const lastMonth = packages.filter(p => {
+        if (!p.lastCommit) return false;
+        const date = new Date(p.lastCommit);
+        return date > oneMonthAgo;
+    }).length;
+
+    const archived = packages.filter(p => p.archived).length;
+    const unreachable = packages.filter(p => !p.reachable).length;
+
     metrics = {
         total: packages.length,
         authors: Object.keys(allAuthors).length,
-        deleted: 0, unreachable: 0, alias: 0, versioned: 0,
-        executables: 0, teacup: 0, lastYear: 0, lastMonth: 0,
-        topTags, topAuthors, domains
+        deleted: 0,
+        unreachable: unreachable,
+        alias: 0,
+        versioned: packages.filter(p => p.lastTag).length,
+        executables: 0,
+        teacup: 0,
+        lastYear: lastYear,
+        lastMonth: lastMonth,
+        topTags,
+        topAuthors,
+        domains
     };
 }
 
@@ -158,13 +203,18 @@ function generateExploreTags() {
 }
 
 function generateFunFacts() {
+    const unreachableCount = packages.filter(p => !p.reachable).length;
+    const archivedCount = packages.filter(p => p.archived).length;
+
     funFacts = [
         `There are currently ${packages.length} packages in the registry!`,
         `Most popular tag: '${metrics.topTags[0]?.name}' with ${metrics.topTags[0]?.count} packages!`,
         `${metrics.authors} unique authors in the ecosystem!`,
         `${metrics.domains[0]?.name} hosts the most packages!`,
-        `The Tcl programming language was created in 1988 by John Ousterhout.`
-    ];
+        `The Tcl programming language was created in 1988 by John Ousterhout.`,
+        unreachableCount > 0 ? `${unreachableCount} packages are currently unreachable.` : null,
+        archivedCount > 0 ? `${archivedCount} packages are archived.` : null
+    ].filter(Boolean);
 }
 
 function renderInterface() {
@@ -209,7 +259,7 @@ function toggleTheme() {
 
 function handleHashChange() {
     const hash = window.location.hash || '#/';
-    
+
     if (hash.startsWith('#/pkg/')) {
         showPackageDetail(decodeURIComponent(hash.replace('#/pkg/', '')), false);
     } else if (hash.startsWith('#/search')) {
@@ -217,7 +267,7 @@ function handleHashChange() {
 
         const queryMatch = hash.match(/[?&]q=([^&]+)/);
         const query = queryMatch ? decodeURIComponent(queryMatch[1]) : '';
-        
+
         initializeSearchPage(query);
     } else if (hash === '#/metrics') {
         showPage('metricsPage');
@@ -232,7 +282,7 @@ function handleHashChange() {
 
 function initializeSearchPage(query) {
     const input = document.getElementById('searchInput2');
-    
+
     if (query) {
         input.value = query;
         performSearch(query);
@@ -260,6 +310,7 @@ function showPage(pageId) {
 function goBack() { window.history.back(); }
 
 function extractShortUrl(url, type) {
+    if (!url) return '';
     try {
         const urlObj = new URL(url);
         if (type === 'repo') {
@@ -282,30 +333,94 @@ function showPackageDetail(pkgName, updateHash = true) {
         const shortRepo = extractShortUrl(src.url, 'repo');
         const shortDoc = hasDifferentWeb ? extractShortUrl(src.web, 'doc') : null;
 
-        // Détermination de l'icône/badge méthode (à droite dans source-header)
         const method = (src.method || 'unknown').toLowerCase();
         let methodDisplay;
         let methodClass = 'source-method';
-        
+
         if (method === 'fossil') {
-            // Fossil : icône seule sans rectangle bleu
             methodDisplay = getFossilIcon();
             methodClass = 'source-method icon-only';
         } else if (method === 'git') {
-            // Git : icône GitHub sans rectangle bleu
             methodDisplay = getGitHubIcon();
             methodClass = 'source-method icon-only';
         } else {
-            // Autres : texte normal avec badge
             methodDisplay = src.method || 'unknown';
         }
 
+        let statusBadges = '';
+        if (src.archived) {
+            statusBadges += `<span class="status-badge archived">Archived</span>`;
+        }
+        if (src.reachable === false) {
+            statusBadges += `<span class="status-badge unreachable">Unreachable</span>`;
+        }
+
+        let commitRow = '';
+        if (src.last_commit) {
+            const date = src.last_commit.split(' ')[0];
+            const sha = src.last_commit_sha ? src.last_commit_sha.substring(0, 7) : '';
+            commitRow = `
+            <div class="source-commit-row">
+                <span class="url-label">last commit:</span>
+                <span class="source-commit-text">
+                    <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    <span>${date}${sha ? ' • ' + sha : ''}</span>
+                </span>
+            </div>`;
+        }
+
+        const licenseRow = `
+            <div class="source-license-row">
+                <span class="url-label">license:</span>
+                <span class="source-license-text">
+                    <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="9" y1="9" x2="15" y2="9"></line>
+                        <line x1="9" y1="15" x2="15" y2="15"></line>
+                    </svg>
+                    <span>${src.license || 'Unknown'}</span>
+                </span>
+            </div>`;
+
+        let versionRow = '';
+        if (src.latest_release) {
+            versionRow = `
+            <div class="source-version-row">
+                <span class="url-label">version:</span>
+                    <span class="source-version-text">
+                        <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                            <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                        </svg>
+                    <span>${src.latest_release}</span>
+                </span>
+            </div>`;
+        }
+
+        let tagRow = '';
+        if (src.last_tag && src.last_tag !== src.latest_release) {
+            tagRow = `
+            <div class="source-tag-row">
+                <span class="url-label">tag:</span>
+                    <span class="source-tag-text">
+                        <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    <span>${src.last_tag}</span>
+                </span>
+            </div>`;
+        }
+
         return `
-        <div class="source-card ${index === 0 ? 'primary' : ''}">
+        <div class="source-card ${index === 0 ? 'primary' : ''} ${src.reachable === false ? 'unreachable' : ''} ${src.archived ? 'archived' : ''}">
             <div class="source-header">
                 <div class="source-author">
                     <span class="author-label">author</span>
                     <span class="author-name">${src.author || 'unknown'}</span>
+                    ${statusBadges}
                 </div>
                 <span class="${methodClass}">${methodDisplay}</span>
             </div>
@@ -336,10 +451,11 @@ function showPackageDetail(pkgName, updateHash = true) {
                             <span style="margin-left: 6px;">${shortDoc}</span>
                         </a>
                     </div>` : ''}
+                    ${versionRow}
+                    ${tagRow}
+                    ${licenseRow}
+                    ${commitRow}
                 </div>
-            </div>
-            <div class="source-footer">
-                <span class="source-license">${src.license || 'Unknown'}</span>
             </div>
         </div>`;
     }).join('');
@@ -347,8 +463,23 @@ function showPackageDetail(pkgName, updateHash = true) {
     const container = document.getElementById('packageDetail');
     if (!container) return;
 
+    let maintenanceWarning = '';
+    if (pkg.archived && pkg.sources.length === 1) {
+        maintenanceWarning = `<div class="maintenance-warning archived-warning">⚠️ This package is archived</div>`;
+    } else if (pkg.reachable === false && pkg.sources.length === 1) {
+        maintenanceWarning = `<div class="maintenance-warning unreachable-warning">⚠️ Repository currently unreachable</div>`;
+    } else if (pkg.lastCommit) {
+        const lastDate = new Date(pkg.lastCommit);
+        const oneYearAgo = new Date();
+        oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+        if (lastDate < oneYearAgo) {
+            maintenanceWarning = `<div class="maintenance-warning stale-warning">⚠️ Last update: ${pkg.lastCommit.split(' ')[0]} (may be unmaintained)</div>`;
+        }
+    }
+
     container.innerHTML = `
         <div class="package-detail">
+            ${maintenanceWarning}
             <div class="detail-header">
                 <h1>${pkg.name}</h1>
                 <p class="detail-desc">${pkg.description}</p>
@@ -402,30 +533,34 @@ function hideSkeleton() {
 function renderRecentPackages() {
     const el = document.getElementById('recentPackages');
     if (!el) return;
-    const sorted = [...packages].sort((a, b) => new Date(b.addedAt) - new Date(a.addedAt));
+    const sorted = [...packages].sort((a, b) => {
+        if (!a.lastCommit) return 1;
+        if (!b.lastCommit) return -1;
+        return new Date(b.lastCommit) - new Date(a.lastCommit);
+    });
     const isMobile = window.innerWidth <= 768;
     const totalItems = sorted.length;
     const displayCount = isMobile ? Math.min(20, totalItems) : totalItems;
     const limited = sorted.slice(0, displayCount);
     const dup = [...limited, ...limited];
-    
+
     el.innerHTML = dup.map(pkg => `
         <div class="package-item" onclick="showPackageDetail('${pkg.name.replace(/'/g, "\\'")}')">
             <span class="package-name">${pkg.name}</span>
             <span class="package-desc">${pkg.description}</span>
-            <span class="package-date">${pkg.addedAt}</span>
+            <span class="package-date">${pkg.lastCommit ? pkg.lastCommit.split(' ')[0] : 'N/A'}</span>
         </div>`).join('');
 
     const pxPerSecondDesktop = 32;
     const pxPerSecondMobile = 25;
-    
+
     const pxPerSecond = isMobile ? pxPerSecondMobile : pxPerSecondDesktop;
-    
+
     requestAnimationFrame(() => {
         const totalHeight = el.scrollHeight;
         const cycleHeight = totalHeight / 2;
         const duration = cycleHeight / pxPerSecond;
-        
+
         el.style.animationDuration = `${duration}s`;
     });
 }
@@ -433,11 +568,19 @@ function renderRecentPackages() {
 function renderRecentVersions() {
     const el = document.getElementById('recentVersions');
     if (!el) return;
-    const sorted = [...packages].sort((a, b) => new Date(b.addedAt) - new Date(a.addedAt)).slice(0, 11);
+    const sorted = [...packages]
+        .filter(p => p.lastTag || p.lastCommit)
+        .sort((a, b) => {
+            const dateA = a.lastCommit ? new Date(a.lastCommit) : new Date(0);
+            const dateB = b.lastCommit ? new Date(b.lastCommit) : new Date(0);
+            return dateB - dateA;
+        })
+        .slice(0, 11);
+
     el.innerHTML = sorted.map(pkg => `
         <div class="version-item" onclick="showPackageDetail('${pkg.name.replace(/'/g, "\\'")}')">
             <span class="version-name">${pkg.name}</span>
-            <span class="version-number">${pkg.version}</span>
+            <span class="version-number">${pkg.lastTag || 'dev'}</span>
         </div>`).join('');
 }
 
@@ -499,9 +642,9 @@ function searchByTag(tag) {
 function performSearch(query) {
     showSearchSkeleton();
     let results = [...packages];
-    
+
     const trimmedQuery = query ? query.trim().toLowerCase() : '';
-    
+
     if (trimmedQuery) {
         if (trimmedQuery.startsWith('tag:')) {
             const t = trimmedQuery.replace('tag:', '');
@@ -515,7 +658,7 @@ function performSearch(query) {
             );
         }
     }
-    
+
     displaySearchResults(results, query);
 
     const input = document.getElementById('searchInput2');
@@ -531,25 +674,28 @@ function displaySearchResults(results, query) {
             countEl.textContent = `${results.length} packages`;
         }
     }
-    
+
     const container = document.getElementById('searchResults');
     if (!container) return;
-    
+
     if (results.length === 0) {
         container.innerHTML = '<p style="color: var(--text-secondary);">No packages found.</p>';
         return;
     }
-    
+
     container.innerHTML = results.map(pkg => `
         <div class="result-item" onclick="showPackageDetail('${pkg.name.replace(/'/g, "\\'")}')">
             <div class="result-header">
                 <span class="result-name">${pkg.name}</span>
                 <span class="result-github">${pkg.github}</span>
+                ${pkg.archived ? '<span class="mini-badge archived">archived</span>' : ''}
+                ${!pkg.reachable ? '<span class="mini-badge unreachable">unreachable</span>' : ''}
             </div>
             <p class="result-desc">${pkg.description}</p>
             <div class="result-meta">
                 <span>${pkg.sources.length} source(s)</span>
                 <span>license: ${pkg.license}</span>
+                ${pkg.lastCommit ? `<span>updated: ${pkg.lastCommit.split(' ')[0]}</span>` : ''}
             </div>
             <div class="result-tags">
                 ${pkg.tags.map(t => `<span class="result-tag" onclick="event.stopPropagation(); searchByTag('${t}')">${t}</span>`).join('')}
@@ -568,30 +714,37 @@ function showSearchSkeleton() {
 function sortResults() {
     const sortBy = document.getElementById('sortSelect')?.value;
     const query = document.getElementById('searchInput2')?.value.trim() || '';
-    
+
     let results = [...packages];
-    
+
     if (query.startsWith('tag:')) {
         const t = query.replace('tag:', '').toLowerCase();
         results = results.filter(p => p.tags.some(tag => tag.toLowerCase().includes(t)));
     } else if (query) {
         const lowerQuery = query.toLowerCase();
-        results = results.filter(p => 
-            p.name.toLowerCase().includes(lowerQuery) || 
+        results = results.filter(p =>
+            p.name.toLowerCase().includes(lowerQuery) ||
             p.description.toLowerCase().includes(lowerQuery)
         );
     }
-    
+
     const sorts = {
-        recent: (a, b) => new Date(b.addedAt) - new Date(a.addedAt),
-        oldest: (a, b) => new Date(a.addedAt) - new Date(b.addedAt),
+        recent: (a, b) => {
+            if (!a.lastCommit) return 1;
+            if (!b.lastCommit) return -1;
+            return new Date(b.lastCommit) - new Date(a.lastCommit);
+        },
+        oldest: (a, b) => {
+            if (!a.lastCommit) return 1;
+            if (!b.lastCommit) return -1;
+            return new Date(a.lastCommit) - new Date(b.lastCommit);
+        },
         az: (a, b) => a.name.localeCompare(b.name),
         za: (a, b) => b.name.localeCompare(a.name)
     };
     results.sort(sorts[sortBy] || sorts.az);
     displaySearchResults(results, query);
 }
-
 
 function toggleFilter(btn) { btn.classList.toggle('active'); }
 
