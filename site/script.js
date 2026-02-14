@@ -3,8 +3,8 @@ let metrics = {};
 let exploreTags = [];
 let funFacts = [];
 
-const REGISTRY_URL = './packages.json';
-// const REGISTRY_URL = 'https://cdn.jsdelivr.net/gh/tcltk-pkgs/registry@main/packages.json';
+// const REGISTRY_URL = './packages.json';
+const REGISTRY_URL = 'https://cdn.jsdelivr.net/gh/tcltk-pkgs/registry@master/metadata/packages-meta.json';
 
 function getFossilIcon() {
     return `<svg class="method-icon" width="32" height="32" viewBox="0 0 32 32" fill="currentColor"
