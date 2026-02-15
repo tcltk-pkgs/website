@@ -547,32 +547,6 @@ body.light .back-link:hover { color: #e879c7; }
     cursor: pointer;
 }
 
-.filter-btn {
-    padding: 5px 10px;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    color: var(--text-secondary);
-    font-family: 'Recursive', monospace;
-    font-size: 0.75rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.filter-btn:hover { border-color: var(--text-secondary); }
-
-.filter-btn.active {
-    background: rgba(59, 130, 246, 0.2);
-    border-color: var(--accent-blue);
-    color: var(--accent-blue);
-}
-
-body.light .filter-btn.active {
-    background: rgba(232, 121, 199, 0.15);
-    border-color: #e879c7;
-    color: #e879c7;
-}
-
 .results-count { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 15px; }
 .results-list { display: flex; flex-direction: column; gap: 12px; }
 
@@ -646,7 +620,10 @@ body.light .result-tag:hover {
     color: #151515;
 }
 
-/* Mini Badges (pour result-item) */
+body.light .result-name { color: var(--text-primary); }
+
+body.light .result-name:hover { color: #e879c7; }
+
 .mini-badge {
     font-size: 0.65rem;
     padding: 2px 6px;
@@ -1342,4 +1319,17 @@ body.light ::selection {
     color: var(--text-primary);
     font-family: 'Recursive', monospace;
     line-height: 1.4;
+}
+
+#tagsTable a {
+    color: var(--text-primary);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--text-secondary);
+    transition: all 0.2s ease;
+    padding-bottom: 1px;
+}
+
+#tagsTable a:hover {
+    color: var(--accent-blue);
+    border-bottom: 1px solid var(--accent-blue);
 }
