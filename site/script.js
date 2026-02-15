@@ -98,7 +98,9 @@ async function loadPackagesData() {
                 lastTag: primarySource.last_tag || null,
 
                 version: primarySource.last_tag || 'v1.0.0',
-                addedAt: primarySource.last_commit ? primarySource.last_commit.split(' ')[0] : new Date().toISOString().split('T')[0],
+                addedAt: primarySource.added_at 
+                    ? primarySource.added_at.replace(' ', 'T') 
+                    : 'N/A',
                 web: cleanUrl(primarySource.web) || cleanUrl(primarySource.url)
             };
         });
@@ -127,24 +129,28 @@ function calculateMetrics() {
     const allDomains = {};
 
     packages.forEach(pkg => {
-        pkg.tags.forEach(tag => {
-            allTags[tag] = (allTags[tag] || 0) + 1;
-        });
+        if (pkg.tags) {
+            pkg.tags.forEach(tag => {
+                allTags[tag] = (allTags[tag] || 0) + 1;
+            });
+        }
 
-        pkg.sources.forEach(src => {
-            if (src.author) {
-                if (!allAuthors[src.author]) {
-                    allAuthors[src.author] = { count: 0, url: null };
+        if (pkg.sources && pkg.sources.length > 0) {
+            pkg.sources.forEach(src => {
+                if (src.author) {
+                    if (!allAuthors[src.author]) {
+                        allAuthors[src.author] = { count: 0 };
+                    }
+                    allAuthors[src.author].count++;
                 }
-                allAuthors[src.author].count++;
-            }
-        });
-
-        if (pkg.web) {
-            try {
-                const domain = new URL(pkg.web).hostname;
-                allDomains[domain] = (allDomains[domain] || 0) + 1;
-            } catch (e) {}
+                
+                if (src.url) {
+                    try {
+                        const url = new URL(src.url);
+                        allDomains[url.hostname] = (allDomains[url.hostname] || 0) + 1;
+                    } catch (e) {}
+                }
+            });
         }
     });
 
@@ -154,7 +160,7 @@ function calculateMetrics() {
         .slice(0, 20);
 
     const topAuthors = Object.entries(allAuthors)
-        .map(([name, data]) => ({ name, count: data.count, url: data.url }))
+        .map(([name, data]) => ({ name, count: data.count }))
         .sort((a, b) => b.count - a.count)
         .slice(0, 20);
 
@@ -164,39 +170,57 @@ function calculateMetrics() {
 
     const now = new Date();
     const oneYearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
-    const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+    const threeMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 3, now.getDate()); // 90 jours
 
-    const lastYear = packages.filter(p => {
-        if (!p.lastCommit) return false;
-        const date = new Date(p.lastCommit);
-        return date > oneYearAgo;
+    // < 90 days
+    const last90Days = packages.filter(p => {
+        if (!p.sources || p.sources.length === 0) return false;
+        return p.sources.some(src => {
+            if (!src.last_commit) return false;
+            const date = new Date(src.last_commit);
+            return date > threeMonthsAgo;
+        });
     }).length;
 
-    const lastMonth = packages.filter(p => {
-        if (!p.lastCommit) return false;
-        const date = new Date(p.lastCommit);
-        return date > oneMonthAgo;
+    // > 1 year
+    const olderThanYear = packages.filter(p => {
+        if (!p.sources || p.sources.length === 0) return true;
+        return p.sources.every(src => {
+            if (!src.last_commit) return true;
+            const date = new Date(src.last_commit);
+            return date < oneYearAgo;
+        });
     }).length;
 
-    const archived = packages.filter(p => p.archived).length;
-    const unreachable = packages.filter(p => !p.reachable).length;
+    const archived = packages.filter(p => {
+        if (!p.sources || p.sources.length === 0) return false;
+        return p.sources.some(src => src.archived === true);
+    }).length;
+
+    const unreachable = packages.filter(p => {
+        if (!p.sources || p.sources.length === 0) return true;
+        return p.sources.every(src => src.reachable === false);
+    }).length;
+
+    const versioned = packages.filter(p => {
+        if (!p.sources || p.sources.length === 0) return false;
+        return p.sources.some(src => src.last_tag || src.latest_release);
+    }).length;
 
     metrics = {
         total: packages.length,
         authors: Object.keys(allAuthors).length,
-        deleted: 0,
+        archived: archived,
         unreachable: unreachable,
-        alias: 0,
-        versioned: packages.filter(p => p.lastTag).length,
-        executables: 0,
-        teacup: 0,
-        lastYear: lastYear,
-        lastMonth: lastMonth,
-        topTags,
-        topAuthors,
-        domains
+        versioned: versioned,
+        olderThanYear: olderThanYear,
+        last90Days: last90Days,
+        topTags: topTags,
+        topAuthors: topAuthors,
+        domains: domains
     };
 }
+
 
 function generateExploreTags() {
     exploreTags = metrics.topTags.slice(0, 10).map(t => t.name);
@@ -418,7 +442,7 @@ function showPackageDetail(pkgName, updateHash = true) {
         <div class="source-card ${index === 0 ? 'primary' : ''} ${src.reachable === false ? 'unreachable' : ''} ${src.archived ? 'archived' : ''}">
             <div class="source-header">
                 <div class="source-author">
-                    <span class="author-label">author</span>
+                    <span class="author-label">author/orgs</span>
                     <span class="author-name">${src.author || 'unknown'}</span>
                     ${statusBadges}
                 </div>
@@ -470,9 +494,9 @@ function showPackageDetail(pkgName, updateHash = true) {
         maintenanceWarning = `<div class="maintenance-warning unreachable-warning">⚠️ Repository currently unreachable</div>`;
     } else if (pkg.lastCommit) {
         const lastDate = new Date(pkg.lastCommit);
-        const oneYearAgo = new Date();
-        oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-        if (lastDate < oneYearAgo) {
+        const twoYearsAgo = new Date();
+        twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
+        if (lastDate < twoYearsAgo) {
             maintenanceWarning = `<div class="maintenance-warning stale-warning">⚠️ Last update: ${pkg.lastCommit.split(' ')[0]} (may be unmaintained)</div>`;
         }
     }
@@ -533,11 +557,13 @@ function hideSkeleton() {
 function renderRecentPackages() {
     const el = document.getElementById('recentPackages');
     if (!el) return;
+
     const sorted = [...packages].sort((a, b) => {
-        if (!a.lastCommit) return 1;
-        if (!b.lastCommit) return -1;
-        return new Date(b.lastCommit) - new Date(a.lastCommit);
+        if (!a.addedAt || a.addedAt === 'N/A') return 1;
+        if (!b.addedAt || b.addedAt === 'N/A') return -1;
+        return new Date(b.addedAt) - new Date(a.addedAt);
     });
+    
     const isMobile = window.innerWidth <= 768;
     const totalItems = sorted.length;
     const displayCount = isMobile ? Math.min(20, totalItems) : totalItems;
@@ -548,19 +574,17 @@ function renderRecentPackages() {
         <div class="package-item" onclick="showPackageDetail('${pkg.name.replace(/'/g, "\\'")}')">
             <span class="package-name">${pkg.name}</span>
             <span class="package-desc">${pkg.description}</span>
-            <span class="package-date">${pkg.lastCommit ? pkg.lastCommit.split(' ')[0] : 'N/A'}</span>
+            <span class="package-date">${pkg.addedAt ? pkg.addedAt.split(/[T ]/)[0] : 'N/A'}</span>
         </div>`).join('');
 
     const pxPerSecondDesktop = 32;
     const pxPerSecondMobile = 25;
-
     const pxPerSecond = isMobile ? pxPerSecondMobile : pxPerSecondDesktop;
 
     requestAnimationFrame(() => {
         const totalHeight = el.scrollHeight;
         const cycleHeight = totalHeight / 2;
         const duration = cycleHeight / pxPerSecond;
-
         el.style.animationDuration = `${duration}s`;
     });
 }
@@ -585,29 +609,52 @@ function renderRecentVersions() {
 }
 
 function renderMetrics() {
-    const ids = ['metricTotal', 'metricAuthors', 'metricDeleted', 'metricUnreachable',
-                 'metricAlias', 'metricVersioned', 'metricExecutables', 'metricTeacup',
-                 'metricYear', 'metricMonth'];
-    ids.forEach(id => {
+    const mapping = {
+        'metricTotal': 'total',
+        'metricAuthors': 'authors',
+        'metricArchived': 'archived',
+        'metricUnreachable': 'unreachable',
+        'metricVersioned': 'versioned',
+        'metricOlderYear': 'olderThanYear',
+        'metric90Days': 'last90Days'
+    };
+
+    Object.entries(mapping).forEach(([id, key]) => {
         const el = document.getElementById(id);
-        if (el) {
-            const key = id.replace('metric', '').toLowerCase();
-            el.textContent = (metrics[key] || 0).toLocaleString();
+        if (el && metrics[key] !== undefined) {
+            el.textContent = metrics[key].toLocaleString();
         }
     });
 
     const tagsTable = document.getElementById('tagsTable');
-    if (tagsTable) tagsTable.innerHTML = metrics.topTags.map(tag => `
-        <tr><td><a href="#/search" onclick="searchByTag('${tag.name}'); return false;">${tag.name}</a></td>
-        <td class="num">${tag.count}</td></tr>`).join('');
+    if (tagsTable && metrics.topTags) {
+        tagsTable.innerHTML = metrics.topTags.map(tag => `
+            <tr>
+                <td><a href="#/search" onclick="searchByTag('${tag.name}'); return false;">${tag.name}</a></td>
+                <td class="num">${tag.count}</td>
+            </tr>
+        `).join('');
+    }
 
     const authorsTable = document.getElementById('authorsTable');
-    if (authorsTable) authorsTable.innerHTML = metrics.topAuthors.map(author => `
-        <tr><td>${author.name}</td><td class="num">${author.count}</td></tr>`).join('');
+    if (authorsTable && metrics.topAuthors) {
+        authorsTable.innerHTML = metrics.topAuthors.map(author => `
+            <tr>
+                <td>${author.name}</td>
+                <td class="num">${author.count}</td>
+            </tr>
+        `).join('');
+    }
 
     const domainsTable = document.getElementById('domainsTable');
-    if (domainsTable) domainsTable.innerHTML = metrics.domains.map(domain => `
-        <tr><td>${domain.name}</td><td class="num">${domain.count}</td></tr>`).join('');
+    if (domainsTable && metrics.domains) {
+        domainsTable.innerHTML = metrics.domains.map(domain => `
+            <tr>
+                <td>${domain.name}</td>
+                <td class="num">${domain.count}</td>
+            </tr>
+        `).join('');
+    }
 }
 
 function rotateFunFacts() {
@@ -687,7 +734,6 @@ function displaySearchResults(results, query) {
         <div class="result-item" onclick="showPackageDetail('${pkg.name.replace(/'/g, "\\'")}')">
             <div class="result-header">
                 <span class="result-name">${pkg.name}</span>
-                <span class="result-github">${pkg.github}</span>
                 ${pkg.archived ? '<span class="mini-badge archived">archived</span>' : ''}
                 ${!pkg.reachable ? '<span class="mini-badge unreachable">unreachable</span>' : ''}
             </div>
@@ -746,8 +792,6 @@ function sortResults() {
     displaySearchResults(results, query);
 }
 
-function toggleFilter(btn) { btn.classList.toggle('active'); }
-
 window.toggleTheme = toggleTheme;
 window.navigateTo = navigateTo;
 window.showPackageDetail = showPackageDetail;
@@ -755,5 +799,4 @@ window.goBack = goBack;
 window.handleSearch = handleSearch;
 window.searchByTag = searchByTag;
 window.sortResults = sortResults;
-window.toggleFilter = toggleFilter;
 window.showSearchSkeleton = showSearchSkeleton;
