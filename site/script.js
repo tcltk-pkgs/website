@@ -170,7 +170,7 @@ function calculateMetrics() {
 
     const now = new Date();
     const oneYearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
-    const threeMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 3, now.getDate()); // 90 jours
+    const threeMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 3, now.getDate()); // 90 days
 
     // < 90 days
     const last90Days = packages.filter(p => {
@@ -380,19 +380,44 @@ function showPackageDetail(pkgName, updateHash = true) {
         }
 
         let commitRow = '';
-        if (src.last_commit) {
-            const date = src.last_commit.split(' ')[0];
-            const sha = src.last_commit_sha ? src.last_commit_sha.substring(0, 7) : '';
+        const hasCommits = src.last_commit && (
+            (Array.isArray(src.last_commit) && src.last_commit.length > 0) || 
+            (typeof src.last_commit === 'string' && src.last_commit !== '')
+        );
+
+        if (hasCommits) {
+            let dates = [];
+            let shas = [];
+            
+            if (Array.isArray(src.last_commit)) {
+                dates = src.last_commit;
+                shas = src.last_commit_sha || [];
+            } else {
+                dates = [src.last_commit];
+                shas = [src.last_commit_sha];
+            }
+            
+            const rowsHtml = dates.map((dateStr, i) => {
+                const date = dateStr ? dateStr.split(' ')[0] : 'N/A';
+                const sha = shas[i] ? shas[i].substring(0, 7) : '-------';
+                return `
+                    <div class="terminal-row">
+                        <span class="terminal-sha">${sha}</span>
+                        <span class="terminal-date">${date}</span>
+                    </div>
+                `;
+            }).join('');
+
             commitRow = `
             <div class="source-commit-row">
-                <span class="url-label">last commit:</span>
-                <span class="source-commit-text">
-                    <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
-                        <circle cx="12" cy="12" r="10"/>
-                        <polyline points="12 6 12 12 16 14"/>
-                    </svg>
-                    <span>${date}${sha ? ' • ' + sha : ''}</span>
-                </span>
+                <span class="url-label">last commit(s):</span>
+                <div class="terminal-table">
+                    <div class="terminal-header">
+                        <span class="terminal-label">commit</span>
+                        <span class="terminal-label">date</span>
+                    </div>
+                    ${rowsHtml}
+                </div>
             </div>`;
         }
 
@@ -410,7 +435,9 @@ function showPackageDetail(pkgName, updateHash = true) {
             </div>`;
 
         let versionRow = '';
-        if (src.latest_release) {
+        const hasValidVersion = src.latest_release && 
+                               !['none', 'null', ''].includes(String(src.latest_release).toLowerCase().trim());
+        if (hasValidVersion) {
             versionRow = `
             <div class="source-version-row">
                 <span class="url-label">version:</span>
@@ -493,11 +520,14 @@ function showPackageDetail(pkgName, updateHash = true) {
     } else if (pkg.reachable === false && pkg.sources.length === 1) {
         maintenanceWarning = `<div class="maintenance-warning unreachable-warning">⚠️ Repository currently unreachable</div>`;
     } else if (pkg.lastCommit) {
-        const lastDate = new Date(pkg.lastCommit);
-        const twoYearsAgo = new Date();
-        twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
-        if (lastDate < twoYearsAgo) {
-            maintenanceWarning = `<div class="maintenance-warning stale-warning">⚠️ Last update: ${pkg.lastCommit.split(' ')[0]} (may be unmaintained)</div>`;
+        const lastDate = Array.isArray(pkg.lastCommit) ? pkg.lastCommit[0] : pkg.lastCommit;
+        if (lastDate) {
+            const date = new Date(lastDate);
+            const twoYearsAgo = new Date();
+            twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
+            if (date < twoYearsAgo) {
+                maintenanceWarning = `<div class="maintenance-warning stale-warning">⚠️ Last update: ${lastDate.split(' ')[0]} (may be unmaintained)</div>`;
+            }
         }
     }
 
