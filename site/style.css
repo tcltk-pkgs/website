@@ -1121,14 +1121,9 @@ footer .container {
 .footer-left {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     color: var(--text-secondary);
     font-size: 0.8rem;
-}
-
-.cursor {
-    color: var(--accent-blue);
-    animation: blink 1s step-end infinite;
 }
 
 body.light .cursor { color: #e879c7; }
@@ -1334,7 +1329,6 @@ body.light ::selection {
     border-bottom: 1px solid var(--accent-blue);
 }
 
-/* Tableau Terminal - Multi-lignes (5 commits) */
 .terminal-table {
     font-family: 'Fira Code', monospace;
     font-size: 0.85rem;
@@ -1454,4 +1448,40 @@ body.light .terminal-date {
 .version-item:focus-visible,
 .package-item:focus-visible {
     outline: none;
+}
+
+.date-short { 
+    display: none; 
+}
+
+.date-full { 
+    display: inline; 
+}
+
+.cursor {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .date-short { 
+        display: inline; 
+    }
+    
+    .date-full { 
+        display: none; 
+    }
+    
+    .meta-version {
+        font-size: 0.75rem;
+    }
+    
+    .footer-left {
+        gap: 4px;
+    }
+}
+
+@media (max-width: 480px) {
+    .meta-version {
+        font-size: 0.7rem;
+    }
 }
