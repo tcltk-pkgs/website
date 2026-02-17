@@ -44,44 +44,48 @@ function getGitHubIcon() {
 }
 
 function updateFooterMetadata() {
-    const generatedAt = localStorage.getItem('registryGeneratedAt');
-    const version = localStorage.getItem('registryVersion');
+    let generatedAt = localStorage.getItem('registryGeneratedAt');
+    let version = localStorage.getItem('registryVersion');
 
+    const isValidVersion = version && /^v?[\d.]+$/.test(version);
+    
     if (!generatedAt) return;
-
+    
     const date = new Date(generatedAt);
-    const footerLeft = document.querySelector('.footer-left');
-    if (!footerLeft) return;
-
-    const oldMeta = footerLeft.querySelector('.meta-version');
-    if (oldMeta) oldMeta.remove();
-
-    const dateShort = date.toLocaleDateString('en-US', {
-        month: 'short',
+    const dateShort = date.toLocaleDateString('en-US', { 
+        month: 'short', 
         day: 'numeric',
         year: 'numeric'
     });
-    const dateLong = date.toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
+    const dateLong = date.toLocaleDateString('en-US', { 
+        month: 'short', 
+        day: 'numeric', 
         year: 'numeric',
         hour: '2-digit',
         minute: '2-digit'
     });
 
-    const isRealVersion = version && !version.includes('T') && !version.includes('-');
-    const versionStr = isRealVersion ? `v${version}` : '';
-
+    let versionStr = '';
+    if (isValidVersion) {
+        versionStr = version.startsWith('v') ? version : `v${version}`;
+    }
+    
+    const footerLeft = document.querySelector('.footer-left');
+    if (!footerLeft) return;
+    
+    const oldMeta = footerLeft.querySelector('.meta-version');
+    if (oldMeta) oldMeta.remove();
+    
     const metaSpan = document.createElement('span');
     metaSpan.className = 'meta-version';
     metaSpan.title = dateLong;
-
+    
     if (versionStr) {
         metaSpan.innerHTML = `• ${versionStr} • <span class="date-full">${dateLong}</span><span class="date-short">${dateShort}</span>`;
     } else {
         metaSpan.innerHTML = `• <span class="date-full">${dateLong}</span><span class="date-short">${dateShort}</span>`;
     }
-
+    
     footerLeft.appendChild(metaSpan);
 }
 
