@@ -1334,7 +1334,6 @@ body.light ::selection {
     border-bottom: 1px solid var(--accent-blue);
 }
 
-/* Tableau Terminal - Multi-lignes (5 commits) */
 .terminal-table {
     font-family: 'Fira Code', monospace;
     font-size: 0.85rem;
@@ -1347,13 +1346,13 @@ body.light ::selection {
 }
 
 body.light .terminal-table {
-    background: #f5f4f0; /* Stone-100 chaud, pas de reflet bleu */
-    border-color: #e7e5e1; /* Stone-200 */
+    background: #f5f4f0; 
+    border-color: #e7e5e1; 
     color: #334155;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
-/* Header des colonnes */
+
 .terminal-header {
     display: grid;
     grid-template-columns: 90px 1fr;
@@ -1381,7 +1380,7 @@ body.light .terminal-label {
     opacity: 0.7;
 }
 
-/* Lignes de commits (5 max) */
+
 .terminal-row {
     display: grid;
     grid-template-columns: 90px 1fr;
@@ -1390,12 +1389,11 @@ body.light .terminal-label {
     transition: opacity 0.2s ease;
 }
 
-/* Légère alternance de transparence pour la lisibilité */
 .terminal-row:nth-child(even) {
     opacity: 0.9;
 }
 
-/* Valeur SHA */
+
 .terminal-sha {
     color: #fbbf24;
     font-weight: 600;
@@ -1407,11 +1405,10 @@ body.light .terminal-label {
 }
 
 body.light .terminal-sha {
-    color: #4f46e5; /* Indigo-600 - harmonieux avec le rose */
+    color: #4f46e5;
     font-weight: 600;
 }
 
-/* Valeur Date */
 .terminal-date {
     color: var(--text-secondary);
     font-size: 0.8rem;
@@ -1422,7 +1419,6 @@ body.light .terminal-date {
     color: #475569;
 }
 
-/* Responsive */
 @media (max-width: 480px) {
     .terminal-table {
         font-size: 0.8rem;
@@ -1434,4 +1430,20 @@ body.light .terminal-date {
         grid-template-columns: 80px 1fr;
         gap: 16px;
     }
+}
+
+.meta-version {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    margin-left: 10px;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+.footer-left:hover .meta-version {
+    opacity: 1;
+}
+
+body.light .meta-version {
+    color: var(--text-secondary);
 }
