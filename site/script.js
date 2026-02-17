@@ -13,7 +13,7 @@ function parseDate(dateStr) {
 
 function escapeHTML(str) {
     if (!str) return '';
-    return String(str).replace(/[&<>'"]/g, 
+    return String(str).replace(/[&<>'"]/g,
         tag => ({
             '&': '&amp;',
             '<': '&lt;',
@@ -42,59 +42,56 @@ function getGitHubIcon() {
         <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
     </svg>`;
 }
+
 function updateFooterMetadata() {
     const generatedAt = localStorage.getItem('registryGeneratedAt');
     const version = localStorage.getItem('registryVersion');
 
-    if (generatedAt) {
-        const date = new Date(generatedAt);
-        const now = new Date();
-        const diffMs = now - date;
-        const diffSecs = Math.floor(diffMs / 1000);
-        const diffMins = Math.floor(diffSecs / 60);
-        const diffHours = Math.floor(diffMins / 60);
-        const diffDays = Math.floor(diffHours / 24);
-        let relativeTime;
-        if (diffDays > 0) {
-            relativeTime = diffDays === 1 ? '1 day ago' : `${diffDays} days ago`;
-        } else if (diffHours > 0) {
-            relativeTime = diffHours === 1 ? '1 hour ago' : `${diffHours} hours ago`;
-        } else if (diffMins > 0) {
-            relativeTime = diffMins === 1 ? '1 minute ago' : `${diffMins} minutes ago`;
-        } else {
-            relativeTime = 'just now';
-        }
-        const formatted = date.toLocaleDateString('en-US', { 
-            month: 'short', 
-            day: 'numeric', 
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-        const isRealVersion = version && !version.includes('T') && !version.includes('-');
-        const versionStr = isRealVersion ? `v${version}` : '';
-        const footerLeft = document.querySelector('.footer-left');
-        if (footerLeft && !footerLeft.querySelector('.meta-version')) {
-            const metaSpan = document.createElement('span');
-            metaSpan.className = 'meta-version';
-            metaSpan.title = `Generated: ${formatted}`;
-            if (versionStr) {
-                metaSpan.textContent = `• ${versionStr} • Updated ${relativeTime} (${formatted})`;
-            } else {
-                metaSpan.textContent = `• Updated ${relativeTime} (${formatted})`;
-            }
-            footerLeft.appendChild(metaSpan);
-        }
+    if (!generatedAt) return;
+
+    const date = new Date(generatedAt);
+    const footerLeft = document.querySelector('.footer-left');
+    if (!footerLeft) return;
+
+    const oldMeta = footerLeft.querySelector('.meta-version');
+    if (oldMeta) oldMeta.remove();
+
+    const dateShort = date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+    });
+    const dateLong = date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+
+    const isRealVersion = version && !version.includes('T') && !version.includes('-');
+    const versionStr = isRealVersion ? `v${version}` : '';
+
+    const metaSpan = document.createElement('span');
+    metaSpan.className = 'meta-version';
+    metaSpan.title = dateLong;
+
+    if (versionStr) {
+        metaSpan.innerHTML = `• ${versionStr} • <span class="date-full">${dateLong}</span><span class="date-short">${dateShort}</span>`;
+    } else {
+        metaSpan.innerHTML = `• <span class="date-full">${dateLong}</span><span class="date-short">${dateShort}</span>`;
     }
+
+    footerLeft.appendChild(metaSpan);
 }
+
 async function loadPackagesData() {
     try {
         showSkeleton();
-        const savedVersion = localStorage.getItem('registryVersion') || '1';
-        const url = `${REGISTRY_URL}?v=${savedVersion}`;
 
-        const response = await fetch(url);
+        const response = await fetch(REGISTRY_URL);
         if (!response.ok) throw new Error('Erreur chargement');
+
         const data = await response.json();
         let metadata = null;
         let packagesData = data;
@@ -102,11 +99,13 @@ async function loadPackagesData() {
         if (Array.isArray(data) && data.length > 0 && data[0].generated_at) {
             metadata = data[0];
             packagesData = data.slice(1);
-            const actualVersion = metadata.version || '1';
-            if (actualVersion !== savedVersion) {
-                localStorage.setItem('registryVersion', String(actualVersion));
+
+            if (metadata.version) {
+                localStorage.setItem('registryVersion', String(metadata.version));
             }
-            localStorage.setItem('registryGeneratedAt', metadata.generated_at);
+            if (metadata.generated_at) {
+                localStorage.setItem('registryGeneratedAt', metadata.generated_at);
+            }
         } else {
             packagesData = Array.isArray(data) ? data : [];
         }
@@ -127,6 +126,7 @@ async function loadPackagesData() {
                     repoShortName = cleanUrl(primarySource.url);
                 }
             }
+
             let maxCommitDate = null;
             let minCommitDate = null;
             let hasCommits = false;
@@ -173,8 +173,8 @@ async function loadPackagesData() {
                 hasCommits: hasCommits,
 
                 version: primarySource.last_tag || 'v1.0.0',
-                addedAt: primarySource.added_at 
-                    ? primarySource.added_at.replace(' ', 'T') 
+                addedAt: primarySource.added_at
+                    ? primarySource.added_at.replace(' ', 'T')
                     : 'N/A',
                 web: cleanUrl(primarySource.web) || cleanUrl(primarySource.url)
             };
@@ -218,7 +218,7 @@ function calculateMetrics() {
                     }
                     allAuthors[src.author].count++;
                 }
-                
+
                 if (src.url) {
                     try {
                         const url = new URL(src.url);
@@ -247,7 +247,7 @@ function calculateMetrics() {
     const oneYearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
     const threeMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 3, now.getDate()); // 90 days
 
-    
+
     const last90Days = packages.filter(p => {
         if (p.maxCommitDate) {
             return p.maxCommitDate > threeMonthsAgo;
@@ -264,7 +264,7 @@ function calculateMetrics() {
         });
     }).length;
 
-    
+
     const olderThanYear = packages.filter(p => {
         if (p.maxCommitDate) {
             return p.maxCommitDate < oneYearAgo;
@@ -477,14 +477,14 @@ function showPackageDetail(pkgName, updateHash = true) {
 
         let commitRow = '';
         const hasCommits = src.last_commit && (
-            (Array.isArray(src.last_commit) && src.last_commit.length > 0) || 
+            (Array.isArray(src.last_commit) && src.last_commit.length > 0) ||
             (typeof src.last_commit === 'string' && src.last_commit !== '')
         );
 
         if (hasCommits) {
             let dates = [];
             let shas = [];
-            
+
             if (Array.isArray(src.last_commit)) {
                 dates = src.last_commit;
                 shas = src.last_commit_sha || [];
@@ -492,7 +492,7 @@ function showPackageDetail(pkgName, updateHash = true) {
                 dates = [src.last_commit];
                 shas = [src.last_commit_sha];
             }
-            
+
             const rowsHtml = dates.map((dateStr, i) => {
                 const date = dateStr ? dateStr.split(' ')[0] : 'N/A';
                 const sha = shas[i] ? shas[i].substring(0, 7) : '-------';
@@ -531,7 +531,7 @@ function showPackageDetail(pkgName, updateHash = true) {
             </div>`;
 
         let versionRow = '';
-        const hasValidVersion = src.latest_release && 
+        const hasValidVersion = src.latest_release &&
                                !['none', 'null', ''].includes(String(src.latest_release).toLowerCase().trim());
         if (hasValidVersion) {
             versionRow = `
@@ -689,7 +689,7 @@ function renderRecentPackages() {
         if (!b.addedAt || b.addedAt === 'N/A') return -1;
         return new Date(b.addedAt) - new Date(a.addedAt);
     });
-    
+
     const isMobile = window.innerWidth <= 768;
     const totalItems = sorted.length;
     const displayCount = isMobile ? Math.min(20, totalItems) : totalItems;
