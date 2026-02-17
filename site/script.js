@@ -193,7 +193,7 @@ async function loadPackagesData() {
         const skPkg = document.getElementById('skeletonPackages');
         if (skPkg) {
             skPkg.style.display = 'flex';
-            skPkg.innerHTML = '<p style="color:var(--text-secondary);padding:20px;font-size:0.85rem;">Impossible de charger les données depuis le registry.</p>';
+            skPkg.innerHTML = '<p style="color:var(--text-secondary);padding:20px;font-size:0.85rem;">Unable to load data from the registry.</p>';
         }
     }
 }
@@ -526,7 +526,7 @@ function showPackageDetail(pkgName, updateHash = true) {
                         <line x1="9" y1="9" x2="15" y2="9"></line>
                         <line x1="9" y1="15" x2="15" y2="15"></line>
                     </svg>
-                    <span>${src.license || 'Unknown'}</span>
+                    <span>${escapeHTML(src.license) || 'Unknown'}</span>
                 </span>
             </div>`;
 
@@ -566,7 +566,7 @@ function showPackageDetail(pkgName, updateHash = true) {
             <div class="source-header">
                 <div class="source-author">
                     <span class="author-label">author/orgs</span>
-                    <span class="author-name">${src.author || 'unknown'}</span>
+                    <span class="author-name">${escapeHTML(src.author) || 'unknown'}</span>
                     ${statusBadges}
                 </div>
                 <span class="${methodClass}">${methodDisplay}</span>
@@ -650,7 +650,7 @@ function showPackageDetail(pkgName, updateHash = true) {
 function renderExploreTags() {
     const el = document.getElementById('exploreTags');
     if (el) el.innerHTML = exploreTags.map(tag =>
-        `<span class="tag" onclick="searchByTag('${tag}')">${tag}</span>`
+        `<span class="tag" onclick="searchByTag('${escapeHTML(tag)}')">${escapeHTML(tag)}</span>`
     ).join('');
 }
 
@@ -757,7 +757,7 @@ function renderMetrics() {
         tagsTable.innerHTML = metrics.topTags.map(tag => `
             <tr>
                 <td><a href="#/search" onclick="searchByTag('${escapeHTML(tag.name)}'); return false;">${escapeHTML(tag.name)}</a></td>
-                <td class="num">${tag.count}</td>
+                <td class="num">${escapeHTML(tag.count)}</td>
             </tr>
         `).join('');
     }
@@ -810,6 +810,7 @@ function handleSearch(e) {
 
 function searchByTag(tag) {
     window.location.hash = `#/search?q=${encodeURIComponent('tag:' + tag)}`;
+    if (document.activeElement) document.activeElement.blur();
 }
 
 function performSearch(query) {
