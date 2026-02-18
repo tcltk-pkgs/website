@@ -97,7 +97,7 @@ async function loadPackagesData() {
     try {
         showSkeleton();
 
-        const response = await fetch(REGISTRY_URL + '?v=' + Date.now());
+        const response = await fetch(REGISTRY_URL);
         if (!response.ok) throw new Error('Failed to load registry data');
 
         const data = await response.json();
