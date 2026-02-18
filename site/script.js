@@ -416,6 +416,7 @@ function initializeSearchPage(query) {
         const countEl = document.getElementById('resultsCount');
         if (countEl) countEl.textContent = `${packages.length} packages`;
     }
+    sortResults();
 }
 
 function navigateTo(page) {
@@ -722,20 +723,40 @@ function renderRecentPackages() {
 function renderRecentVersions() {
     const el = document.getElementById('recentVersions');
     if (!el) return;
+
     const sorted = [...packages]
-        .filter(p => p.lastTag || p.lastCommit)
+        .filter(p => p.sources && p.sources.some(s => 
+            (s.latest_release && !['none', 'null', ''].includes(String(s.latest_release).toLowerCase().trim())) ||
+            (s.last_tag && s.last_tag !== '')
+        ))
         .sort((a, b) => {
-            const dateA = a.lastCommit ? new Date(a.lastCommit) : new Date(0);
-            const dateB = b.lastCommit ? new Date(b.lastCommit) : new Date(0);
+            const dateA = a.maxCommitDate || new Date(0);
+            const dateB = b.maxCommitDate || new Date(0);
             return dateB - dateA;
         })
         .slice(0, 11);
 
-    el.innerHTML = sorted.map(pkg => `
+    el.innerHTML = sorted.map(pkg => {
+        const src = pkg.sources.find(s => 
+            (s.latest_release && !['none', 'null', ''].includes(String(s.latest_release).toLowerCase().trim())) ||
+            (s.last_tag && s.last_tag !== '')
+        );
+
+        let version = 'dev';
+        if (src) {
+            if (src.latest_release && !['none', 'null', ''].includes(String(src.latest_release).toLowerCase().trim())) {
+                version = src.latest_release;
+            } else if (src.last_tag) {
+                version = src.last_tag;
+            }
+        }
+        
+        return `
         <div class="version-item" onclick="showPackageDetail('${escapeHTML(pkg.name).replace(/'/g, "\\'")}')">
             <span class="version-name">${escapeHTML(pkg.name)}</span>
-            <span class="version-number">${pkg.lastTag || 'dev'}</span>
-        </div>`).join('');
+            <span class="version-number">${escapeHTML(version)}</span>
+        </div>`;
+    }).join('');
 }
 
 function renderMetrics() {
