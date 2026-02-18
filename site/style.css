@@ -1387,7 +1387,7 @@ body.light .terminal-label {
 }
 
 .terminal-sha {
-    color: #fbbf24;
+    color: #a5f3fc;
     font-weight: 600;
     letter-spacing: -0.5px;
     font-variant-numeric: tabular-nums;
@@ -1440,6 +1440,14 @@ body.light .terminal-date {
     .package-item:hover {
         transform: none;
         border-color: var(--border);
+    }
+
+    .logo:hover .feather {
+        transform: none;
+    }
+    .logo:active .feather {
+        transform: rotate(-15deg) scale(1.1);
+        transition-duration: 0.2s;
     }
 }
 
