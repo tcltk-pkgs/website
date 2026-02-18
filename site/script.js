@@ -24,7 +24,11 @@ function escapeHTML(str) {
 }
 
 
-const REGISTRY_URL = 'https://cdn.jsdelivr.net/gh/tcltk-pkgs/registry@master/metadata/packages-meta.json';
+const USE_CLOUDFLARE = true;
+
+const REGISTRY_URL = USE_CLOUDFLARE 
+  ? 'https://tcltk-registry.pages.dev/metadata/packages-meta.json'
+  : 'https://cdn.jsdelivr.net/gh/tonuser/registry@latest/metadata/packages-meta.json';
 
 function getFossilIcon() {
     return `<svg class="method-icon" width="32" height="32" viewBox="0 0 32 32" fill="currentColor"
@@ -93,8 +97,8 @@ async function loadPackagesData() {
     try {
         showSkeleton();
 
-        const response = await fetch(REGISTRY_URL);
-        if (!response.ok) throw new Error('Erreur chargement');
+        const response = await fetch(REGISTRY_URL + '?v=' + Date.now());
+        if (!response.ok) throw new Error('Failed to load registry data');
 
         const data = await response.json();
         let metadata = null;
