@@ -922,25 +922,33 @@ function sortResults() {
         const lowerQuery = query.toLowerCase();
         results = results.filter(p =>
             p.name.toLowerCase().includes(lowerQuery) ||
-            p.description.toLowerCase().includes(lowerQuery)
+            p.description.toLowerCase().includes(lowerQuery) ||
+            p.tags.some(t => t.toLowerCase().includes(lowerQuery)) ||
+            p.sources.some(s => s.author && s.author.toLowerCase().includes(lowerQuery))
         );
     }
 
-    const sorts = {
-        recent: (a, b) => {
-            if (!a.maxCommitDate) return 1;
-            if (!b.maxCommitDate) return -1;
-            return b.maxCommitDate - a.maxCommitDate;
-        },
-        oldest: (a, b) => {
-            if (!a.minCommitDate) return 1;
-            if (!b.minCommitDate) return -1;
-            return a.minCommitDate - b.minCommitDate;
-        },
-        az: (a, b) => a.name.localeCompare(b.name),
-        za: (a, b) => b.name.localeCompare(a.name)
+    const getMaxTime = (pkg) => {
+        return (pkg.maxCommitDate instanceof Date && !isNaN(pkg.maxCommitDate)) 
+            ? pkg.maxCommitDate.getTime() 
+            : 0;
     };
-    results.sort(sorts[sortBy] || sorts.az);
+
+    switch(sortBy) {
+        case 'oldest':
+            results.sort((a, b) => getMaxTime(a) - getMaxTime(b));
+            break;
+        case 'recent':
+            results.sort((a, b) => getMaxTime(b) - getMaxTime(a));
+            break;
+        case 'az':
+            results.sort((a, b) => a.name.localeCompare(b.name));
+            break;
+        case 'za':
+            results.sort((a, b) => b.name.localeCompare(a.name));
+            break;
+    }
+    
     displaySearchResults(results, query);
 }
 
