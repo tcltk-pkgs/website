@@ -1882,3 +1882,36 @@ body.light .filter-btn.active {
         padding: 5px 10px;
     }
 }
+
+.search-row .search-box input,
+.search-row .search-box button[type="submit"],
+.reset-btn,
+.sort select {
+    height: 42px;
+    box-sizing: border-box;
+}
+
+.sort select {
+    padding: 0 12px;
+    line-height: 40px;
+}
+
+@media (max-width: 768px) {
+    .search-row .search-box input,
+    .search-row .search-box button[type="submit"],
+    .reset-btn {
+        height: 42px;
+    }
+    
+    .reset-btn svg,
+    .search-row .search-box button[type="submit"] svg {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .sort select {
+        height: 42px;
+        line-height: 40px;
+        min-width: 140px;
+    }
+}
