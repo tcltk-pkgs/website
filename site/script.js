@@ -840,6 +840,22 @@ function handleSearch(e) {
     return false;
 }
 
+function resetSearch() {
+    const input = document.getElementById('searchInput2');
+    const sortSelect = document.getElementById('sortSelect');
+    
+    if (input) {
+        input.value = '';
+        input.focus();
+    }
+
+    if (sortSelect) {
+        sortSelect.value = 'az';
+    }
+
+    sortResults();
+}
+
 function searchByTag(tag) {
     window.location.hash = `#/search?q=${encodeURIComponent('tag:' + tag)}`;
     if (document.activeElement) document.activeElement.blur();
@@ -964,6 +980,7 @@ window.navigateTo = navigateTo;
 window.showPackageDetail = showPackageDetail;
 window.goBack = goBack;
 window.handleSearch = handleSearch;
+window.resetSearch = resetSearch;
 window.searchByTag = searchByTag;
 window.sortResults = sortResults;
 window.showSearchSkeleton = showSearchSkeleton;
