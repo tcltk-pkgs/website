@@ -932,6 +932,24 @@ function showSearchSkeleton() {
     ).join('');
 }
 
+const activeFilters = {
+    reachable: false,
+    archived: false,
+    lib: false
+};
+
+function toggleFilter(filterName) {
+    activeFilters[filterName] = !activeFilters[filterName];
+
+    const btnId = 'btn' + filterName.charAt(0).toUpperCase() + filterName.slice(1);
+    const btn = document.getElementById(btnId);
+    if (btn) {
+        btn.classList.toggle('active', activeFilters[filterName]);
+    }
+
+    sortResults();
+}
+
 function sortResults() {
     const sortBy = document.getElementById('sortSelect')?.value;
     const query = document.getElementById('searchInput2')?.value.trim() || '';
@@ -951,6 +969,25 @@ function sortResults() {
         );
     }
 
+    if (activeFilters.reachable) {
+        results = results.filter(p => 
+            p.sources && p.sources.some(s => s.reachable !== false)
+        );
+    }
+    
+    if (activeFilters.archived) {
+        results = results.filter(p => 
+            p.sources && p.sources.some(s => s.archived === true)
+        );
+    }
+    
+    if (activeFilters.lib) {
+        results = results.filter(p => 
+            p.lib === true || (p.sources && p.sources.some(s => s.lib === true))
+        );
+    }
+
+    // Tri
     const getMaxTime = (pkg) => {
         return (pkg.maxCommitDate instanceof Date && !isNaN(pkg.maxCommitDate)) 
             ? pkg.maxCommitDate.getTime() 
@@ -974,6 +1011,7 @@ function sortResults() {
     
     displaySearchResults(results, query);
 }
+
 
 window.toggleTheme = toggleTheme;
 window.navigateTo = navigateTo;
