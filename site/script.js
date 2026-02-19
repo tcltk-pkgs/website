@@ -1,3 +1,6 @@
+//  Copyright (c) 2026 Nicolas ROBERT.
+//  Distributed under MIT license. Please see LICENSE for details.
+
 let packages = [];
 let metrics = {};
 let exploreTags = [];
