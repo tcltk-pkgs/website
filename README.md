@@ -4,6 +4,10 @@ A web interface to discover and search Tcl/Tk packages.
 
 [tcltk-pkgs.pages.dev](https://tcltk-pkgs.pages.dev/)
 
-## Credits
+## Credits:
 
 Developed with assistance from [Kimi](https://kimi.moonshot.cn) (Moonshot AI).
+
+## License:
+
+[MIT](LICENSE)
