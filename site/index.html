@@ -172,7 +172,12 @@
                             </select>
                         </div>
                     </div>
-
+                    <div class="filter-row">
+                        <span class="filter-label">filters:</span>
+                        <button type="button" class="filter-btn" id="btnReachable" onclick="toggleFilter('reachable')">reachable</button>
+                        <button type="button" class="filter-btn" id="btnArchived" onclick="toggleFilter('archived')">archived</button>
+                        <button type="button" class="filter-btn" id="btnLib" onclick="toggleFilter('lib')">lib</button>
+                    </div>
                     <p class="results-count" id="resultsCount"></p>
                     <div class="results-list" id="searchResults"></div>
                 </div>
