@@ -5,6 +5,7 @@ let packages = [];
 let metrics = {};
 let exploreTags = [];
 let funFacts = [];
+let isDataLoaded = false;
 
 function parseDate(dateStr) {
     if (!dateStr || dateStr === 'N/A') return null;
@@ -198,6 +199,14 @@ async function loadPackagesData() {
         updateFooterMetadata();
         hideSkeleton();
 
+        isDataLoaded = true;
+        const hash = window.location.hash || '#/';
+        if (hash.startsWith('#/search')) {
+            const queryMatch = hash.match(/[?&]q=([^&]+)/);
+            const query = queryMatch ? decodeURIComponent(queryMatch[1]) : '';
+            initializeSearchPage(query);
+        }
+
     } catch (error) {
         console.error('Erreur:', error);
         hideSkeleton();
@@ -358,6 +367,7 @@ function renderInterface() {
 
 document.addEventListener('DOMContentLoaded', function() {
     loadTheme();
+    handleHashChange();
     showSkeleton();
     loadPackagesData().then(() => {
         let scrollTicking = false;
@@ -372,7 +382,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         window.addEventListener('hashchange', handleHashChange);
-        handleHashChange();
     });
 });
 
@@ -413,12 +422,26 @@ function handleHashChange() {
 
 function initializeSearchPage(query) {
     const input = document.getElementById('searchInput2');
+    const sortSelect = document.getElementById('sortSelect');
+    
+    if (input) {
+        input.value = query || '';
+    }
+
+    if (sortSelect) {
+        sortSelect.value = 'az';
+    }
+
+    if (!isDataLoaded) {
+        showSearchSkeleton();
+        const countEl = document.getElementById('resultsCount');
+        if (countEl) countEl.textContent = 'Loading packages...';
+        return;
+    }
 
     if (query) {
-        input.value = query;
         performSearch(query);
     } else {
-        input.value = '';
         displaySearchResults(packages, '');
         const countEl = document.getElementById('resultsCount');
         if (countEl) countEl.textContent = `${packages.length} packages`;
@@ -667,18 +690,25 @@ function renderExploreTags() {
 }
 
 function showSkeleton() {
-    const skPkg = document.getElementById('skeletonPackages');
-    const realPkg = document.getElementById('packagesScrollContainer');
-    if (skPkg)  skPkg.style.display  = 'flex';
-    if (realPkg) realPkg.style.display = 'none';
-    const skVer = document.getElementById('skeletonVersions');
-    const realVer = document.getElementById('recentVersions');
-    if (skVer)  skVer.style.display  = 'flex';
-    if (realVer) realVer.style.display = 'none';
-    const tagsEl = document.getElementById('exploreTags');
-    if (tagsEl) tagsEl.innerHTML = [0,1,2,3,4,5,6,7,8,9].map(i =>
-        `<span class="skeleton-tag-sm" style="--i:${i}"></span>`
-    ).join('');
+    const hash = window.location.hash || '#/';
+    const isHome = hash === '#/' || hash === '';
+
+    if (isHome) {
+        const skPkg = document.getElementById('skeletonPackages');
+        const realPkg = document.getElementById('packagesScrollContainer');
+        if (skPkg) skPkg.style.display = 'flex';
+        if (realPkg) realPkg.style.display = 'none';
+        
+        const skVer = document.getElementById('skeletonVersions');
+        const realVer = document.getElementById('recentVersions');
+        if (skVer) skVer.style.display = 'flex';
+        if (realVer) realVer.style.display = 'none';
+        
+        const tagsEl = document.getElementById('exploreTags');
+        if (tagsEl) tagsEl.innerHTML = [0,1,2,3,4,5,6,7,8,9].map(i =>
+            `<span class="skeleton-tag-sm" style="--i:${i}"></span>`
+        ).join('');
+    }
 }
 
 function hideSkeleton() {
