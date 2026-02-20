@@ -846,7 +846,6 @@ function resetSearch() {
     
     if (input) {
         input.value = '';
-        input.focus();
     }
 
     if (sortSelect) {
@@ -935,7 +934,7 @@ function showSearchSkeleton() {
 const activeFilters = {
     reachable: false,
     archived: false,
-    lib: false
+    extension: false
 };
 
 function toggleFilter(filterName) {
@@ -981,9 +980,9 @@ function sortResults() {
         );
     }
     
-    if (activeFilters.lib) {
+    if (activeFilters.extension) {
         results = results.filter(p => 
-            p.lib === true || (p.sources && p.sources.some(s => s.lib === true))
+            p.extension === true || (p.sources && p.sources.some(s => s.extension === true))
         );
     }
 
