@@ -142,7 +142,7 @@
             <div id="searchPage" class="page-content" style="display: none;">
                 <div class="container page-container">
                     <h2>search</h2>
-                    
+
                     <div class="search-row">
                         <form class="search-box" onsubmit="return handleSearch(event)">
                             <button type="submit" aria-label="search">
@@ -154,14 +154,14 @@
                             <div class="input-wrapper">
                                 <input type="text" id="searchInput2" placeholder="query" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
                             </div>
-                            <button type="button" class="reset-btn" onclick="resetSearch()" aria-label="Reset search">
+                            <button type="button" class="reset-btn" onclick="resetSearch()" aria-label="Reset search" onmousedown="event.preventDefault()">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
                                     <path d="M23 4v6h-6"/>
                                     <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
                                 </svg>
                             </button>
                         </form>
-                        
+
                         <div class="sort">
                             <label>sort:</label>
                             <select id="sortSelect" onchange="sortResults()">
@@ -176,7 +176,7 @@
                         <span class="filter-label">filters:</span>
                         <button type="button" class="filter-btn" id="btnReachable" onclick="toggleFilter('reachable')">reachable</button>
                         <button type="button" class="filter-btn" id="btnArchived" onclick="toggleFilter('archived')">archived</button>
-                        <button type="button" class="filter-btn" id="btnLib" onclick="toggleFilter('lib')">lib</button>
+                        <button type="button" class="filter-btn" id="btnExtension" onclick="toggleFilter('extension')">extension</button>
                     </div>
                     <p class="results-count" id="resultsCount"></p>
                     <div class="results-list" id="searchResults"></div>
