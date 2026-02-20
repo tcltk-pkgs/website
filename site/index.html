@@ -15,6 +15,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400&display=swap" rel="stylesheet">
 </head>
 <body class="dark">
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.body.className = savedTheme;
+        })();
+    </script>
     <div class="page-wrapper">
         <header id="header">
             <div class="container">
