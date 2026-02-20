@@ -1915,3 +1915,38 @@ body.light .filter-btn.active {
         min-width: 140px;
     }
 }
+
+.search-row .reset-btn:hover,
+.search-row .reset-btn:focus,
+.search-row .search-box button[type="submit"]:hover,
+.search-row .search-box button[type="submit"]:focus {
+    border-color: var(--border) !important;
+}
+
+.filter-btn:focus,
+.filter-btn:focus-visible {
+    outline: none;
+    border-color: var(--border);
+}
+
+.filter-btn.active:focus,
+.filter-btn.active:focus-visible {
+    border-color: var(--accent-blue);
+}
+
+body.light .filter-btn.active:focus,
+body.light .filter-btn.active:focus-visible {
+    border-color: #e879c7;
+}
+
+@media (hover: none) {
+    .filter-btn:focus {
+        border-color: var(--border);
+    }
+    .filter-btn.active:focus {
+        border-color: var(--accent-blue);
+    }
+    body.light .filter-btn.active:focus {
+        border-color: #e879c7;
+    }
+}
