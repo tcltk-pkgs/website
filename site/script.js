@@ -30,7 +30,7 @@ function escapeHTML(str) {
 
 const USE_CLOUDFLARE = true;
 
-const REGISTRY_URL = USE_CLOUDFLARE 
+const REGISTRY_URL = USE_CLOUDFLARE
   ? 'https://tcltk-registry.pages.dev/metadata/packages-meta.json'
   : 'https://cdn.jsdelivr.net/gh/tonuser/registry@latest/metadata/packages-meta.json';
 
@@ -56,18 +56,18 @@ function updateFooterMetadata() {
     let version = localStorage.getItem('registryVersion');
 
     const isValidVersion = version && /^v?[\d.]+$/.test(version);
-    
+
     if (!generatedAt) return;
-    
+
     const date = new Date(generatedAt);
-    const dateShort = date.toLocaleDateString('en-US', { 
-        month: 'short', 
+    const dateShort = date.toLocaleDateString('en-US', {
+        month: 'short',
         day: 'numeric',
         year: 'numeric'
     });
-    const dateLong = date.toLocaleDateString('en-US', { 
-        month: 'short', 
-        day: 'numeric', 
+    const dateLong = date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
         year: 'numeric',
         hour: '2-digit',
         minute: '2-digit'
@@ -77,23 +77,23 @@ function updateFooterMetadata() {
     if (isValidVersion) {
         versionStr = version.startsWith('v') ? version : `v${version}`;
     }
-    
+
     const footerLeft = document.querySelector('.footer-left');
     if (!footerLeft) return;
-    
+
     const oldMeta = footerLeft.querySelector('.meta-version');
     if (oldMeta) oldMeta.remove();
-    
+
     const metaSpan = document.createElement('span');
     metaSpan.className = 'meta-version';
     metaSpan.title = dateLong;
-    
+
     if (versionStr) {
         metaSpan.innerHTML = `• ${versionStr} • <span class="date-full">${dateLong}</span><span class="date-short">${dateShort}</span>`;
     } else {
         metaSpan.innerHTML = `• <span class="date-full">${dateLong}</span><span class="date-short">${dateShort}</span>`;
     }
-    
+
     footerLeft.appendChild(metaSpan);
 }
 
@@ -167,13 +167,24 @@ async function loadPackagesData() {
                 github: repoShortName,
                 tags: pkg.tags || [],
                 license: primarySource.license || 'Unknown',
-                sources: (pkg.sources || []).map(src => ({
-                    ...src,
-                    url: cleanUrl(src.url),
-                    web: cleanUrl(src.web),
-                    author: src.author ? src.author.trim() : 'unknown',
-                    license: src.license ? src.license.trim() : 'Unknown'
-                })),
+                sources: (pkg.sources || []).map(src => {
+                    let releaseDate = null;
+                    if (src.last_release_date && src.last_release_date !== '') {
+                        const parsed = new Date(src.last_release_date);
+                        if (!isNaN(parsed.getTime())) {
+                            releaseDate = parsed;
+                        }
+                    }
+
+                    return {
+                        ...src,
+                        url: cleanUrl(src.url),
+                        web: cleanUrl(src.web),
+                        author: src.author ? src.author.trim() : 'unknown',
+                        license: src.license ? src.license.trim() : 'Unknown',
+                        lastReleaseDate: releaseDate
+                    };
+                }),
 
                 lastCommit: primarySource.last_commit || null,
                 lastCommitSha: primarySource.last_commit_sha || null,
@@ -423,7 +434,7 @@ function handleHashChange() {
 function initializeSearchPage(query) {
     const input = document.getElementById('searchInput2');
     const sortSelect = document.getElementById('sortSelect');
-    
+
     if (input) {
         input.value = query || '';
     }
@@ -698,12 +709,12 @@ function showSkeleton() {
         const realPkg = document.getElementById('packagesScrollContainer');
         if (skPkg) skPkg.style.display = 'flex';
         if (realPkg) realPkg.style.display = 'none';
-        
+
         const skVer = document.getElementById('skeletonVersions');
         const realVer = document.getElementById('recentVersions');
         if (skVer) skVer.style.display = 'flex';
         if (realVer) realVer.style.display = 'none';
-        
+
         const tagsEl = document.getElementById('exploreTags');
         if (tagsEl) tagsEl.innerHTML = [0,1,2,3,4,5,6,7,8,9].map(i =>
             `<span class="skeleton-tag-sm" style="--i:${i}"></span>`
@@ -767,9 +778,18 @@ function renderRecentVersions() {
             (s.last_tag && s.last_tag !== '')
         ))
         .sort((a, b) => {
-            const dateA = a.maxCommitDate || new Date(0);
-            const dateB = b.maxCommitDate || new Date(0);
-            return dateB - dateA;
+            const getReleaseDate = (pkg) => {
+                if (pkg.sources && pkg.sources.length > 0) {
+                    for (const s of pkg.sources) {
+                        if (s.lastReleaseDate && s.lastReleaseDate instanceof Date && !isNaN(s.lastReleaseDate)) {
+                            return s.lastReleaseDate;
+                        }
+                    }
+                }
+                return pkg.maxCommitDate || new Date(0);
+            };
+            
+            return getReleaseDate(b) - getReleaseDate(a);
         })
         .slice(0, 11);
 
@@ -873,7 +893,7 @@ function handleSearch(e) {
 function resetSearch() {
     const input = document.getElementById('searchInput2');
     const sortSelect = document.getElementById('sortSelect');
-    
+
     if (input) {
         input.value = '';
     }
@@ -999,27 +1019,27 @@ function sortResults() {
     }
 
     if (activeFilters.reachable) {
-        results = results.filter(p => 
+        results = results.filter(p =>
             p.sources && p.sources.some(s => s.reachable !== false)
         );
     }
-    
+
     if (activeFilters.archived) {
-        results = results.filter(p => 
+        results = results.filter(p =>
             p.sources && p.sources.some(s => s.archived === true)
         );
     }
-    
+
     if (activeFilters.extension) {
-        results = results.filter(p => 
+        results = results.filter(p =>
             p.extension === true || (p.sources && p.sources.some(s => s.extension === true))
         );
     }
 
     // Tri
     const getMaxTime = (pkg) => {
-        return (pkg.maxCommitDate instanceof Date && !isNaN(pkg.maxCommitDate)) 
-            ? pkg.maxCommitDate.getTime() 
+        return (pkg.maxCommitDate instanceof Date && !isNaN(pkg.maxCommitDate))
+            ? pkg.maxCommitDate.getTime()
             : 0;
     };
 
@@ -1037,7 +1057,7 @@ function sortResults() {
             results.sort((a, b) => b.name.localeCompare(a.name));
             break;
     }
-    
+
     displaySearchResults(results, query);
 }
 
