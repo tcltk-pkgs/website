@@ -809,6 +809,9 @@ function renderRecentVersions() {
     const el = document.getElementById('recentVersions');
     if (!el) return;
 
+    const isMobile = window.innerWidth <= 768;
+    const limit = isMobile ? 6 : 11;
+
     const sorted = [...packages]
         .filter(p => p.sources && p.sources.some(s => 
             (s.latest_release && !['none', 'null', ''].includes(String(s.latest_release).toLowerCase().trim())) ||
@@ -828,7 +831,7 @@ function renderRecentVersions() {
             
             return getReleaseDate(b) - getReleaseDate(a);
         })
-        .slice(0, 11);
+        .slice(0, limit);
 
     el.innerHTML = sorted.map(pkg => {
         const src = pkg.sources.find(s => 
