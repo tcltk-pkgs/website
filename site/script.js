@@ -435,9 +435,29 @@ function handleHashChange() {
 function initializeSearchPage(query) {
     const input = document.getElementById('searchInput2');
     const sortSelect = document.getElementById('sortSelect');
+    const resetBtn = input?.parentElement?.querySelector('.reset-btn');
 
     if (input) {
         input.value = query || '';
+
+        if (resetBtn) {
+            const toggleClearBtn = () => {
+                if (input.value.length > 0) {
+                    resetBtn.classList.add('visible');
+                } else {
+                    resetBtn.classList.remove('visible');
+                    // Si vide et données chargées, réinitialiser la liste
+                    if (isDataLoaded) {
+                        displaySearchResults(packages, '');
+                        const countEl = document.getElementById('resultsCount');
+                        if (countEl) countEl.textContent = `${packages.length} packages`;
+                    }
+                }
+            };
+            
+            input.addEventListener('input', toggleClearBtn);
+            toggleClearBtn();
+        }
     }
 
     if (sortSelect) {
@@ -682,9 +702,9 @@ function showPackageDetail(pkgName, updateHash = true) {
         const lastDate = Array.isArray(pkg.lastCommit) ? pkg.lastCommit[0] : pkg.lastCommit;
         if (lastDate) {
             const date = new Date(lastDate);
-            const twoYearsAgo = new Date();
-            twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
-            if (date < twoYearsAgo) {
+            const fiveYearsAgo = new Date();
+            fiveYearsAgo.setFullYear(fiveYearsAgo.getFullYear() - 5);
+            if (date < fiveYearsAgo) {
                 maintenanceWarning = `<div class="maintenance-warning stale-warning">⚠️ Last update: ${lastDate.split(' ')[0]} (may be unmaintained)</div>`;
             }
         }
@@ -909,17 +929,22 @@ function handleSearch(e) {
 
 function resetSearch() {
     const input = document.getElementById('searchInput2');
-    const sortSelect = document.getElementById('sortSelect');
+    const resetBtn = input?.parentElement?.querySelector('.reset-btn');
 
     if (input) {
         input.value = '';
+        input.focus();
     }
 
-    if (sortSelect) {
-        sortSelect.value = 'az';
+    if (resetBtn) {
+        resetBtn.classList.remove('visible');
     }
 
-    sortResults();
+    window.location.hash = '#/search';
+
+    displaySearchResults(packages, '');
+    const countEl = document.getElementById('resultsCount');
+    if (countEl) countEl.textContent = `${packages.length} packages`;
 }
 
 function searchByTag(tag) {
