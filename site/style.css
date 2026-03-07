@@ -972,7 +972,9 @@ body.light .source-method.icon-only:hover { color: #d946ef; }
 .source-web-row,
 .source-license-row,
 .source-commit-row,
-.source-tag-row {
+.source-tag-row,
+.source-version-row,
+.source-artifacts-row {
     display: flex;
     flex-direction: column;
     gap: 4px;

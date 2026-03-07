@@ -211,12 +211,6 @@ async function loadPackagesData() {
         hideSkeleton();
 
         isDataLoaded = true;
-        const hash = window.location.hash || '#/';
-        if (hash.startsWith('#/search')) {
-            const queryMatch = hash.match(/[?&]q=([^&]+)/);
-            const query = queryMatch ? decodeURIComponent(queryMatch[1]) : '';
-            initializeSearchPage(query);
-        }
 
     } catch (error) {
         console.error('Erreur:', error);
@@ -378,9 +372,17 @@ function renderInterface() {
 
 document.addEventListener('DOMContentLoaded', function() {
     loadTheme();
-    handleHashChange();
-    showSkeleton();
+
+    const hash = window.location.hash || '#/';
+    if (hash === '#/' || hash === '') {
+        showSkeleton();
+    }
+
     loadPackagesData().then(() => {
+        handleHashChange();
+
+        window.addEventListener('hashchange', handleHashChange);
+
         let scrollTicking = false;
         window.addEventListener('scroll', () => {
             if (!scrollTicking) {
@@ -392,7 +394,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 scrollTicking = true;
             }
         });
-        window.addEventListener('hashchange', handleHashChange);
     });
 });
 
@@ -498,6 +499,21 @@ function showPackageDetail(pkgName, updateHash = true) {
         const hasDifferentWeb = src.web && src.web !== src.url;
         const shortRepo = extractShortUrl(src.url, 'repo');
         const shortDoc = hasDifferentWeb ? extractShortUrl(src.web, 'doc') : null;
+
+        let artifactsRow = '';
+        if (src.artifacts) {
+            const shortArtifacts = extractShortUrl(src.artifacts, 'repo') || src.artifacts;
+            artifactsRow = `
+            <div class="source-artifacts-row">
+                <span class="url-label">artifacts:</span>
+                <a href="${src.artifacts}" target="_blank" class="source-url" title="${src.artifacts}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                    <span style="margin-left: 6px;">${escapeHTML(shortArtifacts)}</span>
+                </a>
+            </div>`;
+        }
 
         const method = (src.method || 'unknown').toLowerCase();
         let methodDisplay;
@@ -644,6 +660,7 @@ function showPackageDetail(pkgName, updateHash = true) {
                             <span style="margin-left: 6px;">${escapeHTML(shortDoc)}</span>
                         </a>
                     </div>` : ''}
+                    ${artifactsRow}
                     ${versionRow}
                     ${tagRow}
                     ${licenseRow}
