@@ -267,9 +267,14 @@
                     <div class="about-content">
                         <p>TclTkpkgs is a web interface to search for Tcl/Tk packages.</p>
                         <h3>Why does "TclTkpkgs" exist?</h3>
-                        <p>To explore the Tcl/Tk ecosystem. But also to centralize package discovery—giving the community a single, modern place to find and share libraries. It helps newcomers discover what exists, and helps maintainers get visibility for their work.</p>
+                        <p>To explore the Tcl/Tk ecosystem. But also to centralize package discovery—giving the community a single, modern place
+                            to find and share libraries. It helps newcomers discover what exists, and helps maintainers get visibility for their
+                            work.</p>
                         <h3>How do I add my package?</h3>
-                        <p>Submit a PR to the <a href="https://github.com/tcltk-pkgs/registry" target="_blank">registry</a> with your package information. Simply add an entry to the <code>packages.json</code> file following this format:</p>
+                        <p>Submit a PR to the <a href="https://github.com/tcltk-pkgs/registry" target="_blank" class="source-url">
+                                <span>registry</span>
+                            </a> with your package information. Simply add an entry to the <code>packages.json</code> file following this
+                            format:</p>
 <pre><code>{
   <span class="json-key">"name"</span>: <span class="json-string">"mypackage"</span>,
   <span class="json-key">"sources"</span>: [
@@ -286,6 +291,8 @@
 }</code></pre>
 
                         <p><strong>Notes:</strong> The <code>web</code> field is optional and points to documentation if different from the repository URL.</p>
+                        <h3>My package is incorrectly listed, how can I update it?</h3>
+                        <p>Please open an issue at <a href="https://github.com/tcltk-pkgs/registry/issues" target="_blank" class="source-url"><span>registry/issues</span></a></p>
                         <h3>Acknowledgments:</h3>
                         <p>The registry format draws inspiration from modern package registries 
                         (npm, Cargo, Nim) while being specifically adapted for the <code>Tcl/Tk</code> ecosystem.</p>
