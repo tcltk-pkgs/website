@@ -681,8 +681,6 @@ function showPackageDetail(pkgName, updateHash = true) {
                         </a>
                     </div>` : ''}
                     ${artifactsRow}
-                    ${versionRow}
-                    ${tagRow}
                     ${licenseRow}
                     ${commitRow}
                 </div>
