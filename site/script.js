@@ -167,6 +167,7 @@ async function loadPackagesData() {
                 github: repoShortName,
                 tags: pkg.tags || [],
                 license: primarySource.license || 'Unknown',
+                extension: primarySource.extension || false,
                 sources: (pkg.sources || []).map(src => {
                     let releaseDate = null;
                     if (src.last_release_date && src.last_release_date !== '') {
@@ -505,10 +506,20 @@ function extractShortUrl(url, type) {
             if (match) return match[1];
             return urlObj.pathname.replace(/^\/|\/$/g, '');
         } else if (type === 'doc') {
-            const parts = urlObj.pathname.split('/');
-            return parts[parts.length - 1];
+            const hostname = urlObj.hostname.replace(/^www\./, '');
+            let pathname = urlObj.pathname.replace(/\/$/, '');
+            const parts = pathname.split('/').filter(p => p.length > 0);
+
+            if (parts.length === 0) return hostname;
+            
+            if (parts.length >= 2) {
+                return parts.slice(-2).join('/');
+            }
+            return parts[parts.length - 1] || hostname;
         }
-    } catch (e) { return url; }
+    } catch (e) { 
+        return url.length > 30 ? '...' + url.slice(-27) : url;
+    }
 }
 
 function showPackageDetail(pkgName, updateHash = true) {
@@ -810,10 +821,15 @@ function renderRecentVersions() {
     const isMobile = window.innerWidth <= 768;
     const limit = isMobile ? 6 : 11;
 
+    const isValidVersion = (val) => {
+        if (!val) return false;
+        const normalized = String(val).toLowerCase().trim();
+        return !['none', 'null', ''].includes(normalized);
+    };
+
     const sorted = [...packages]
         .filter(p => p.sources && p.sources.some(s => 
-            (s.latest_release && !['none', 'null', ''].includes(String(s.latest_release).toLowerCase().trim())) ||
-            (s.last_tag && s.last_tag !== '')
+            isValidVersion(s.latest_release) || isValidVersion(s.last_tag)
         ))
         .sort((a, b) => {
             const getReleaseDate = (pkg) => {
@@ -831,17 +847,21 @@ function renderRecentVersions() {
         })
         .slice(0, limit);
 
+    if (sorted.length === 0) {
+        el.innerHTML = '<p style="color: var(--text-secondary); font-size: 0.85rem;">No recent releases</p>';
+        return;
+    }
+
     el.innerHTML = sorted.map(pkg => {
         const src = pkg.sources.find(s => 
-            (s.latest_release && !['none', 'null', ''].includes(String(s.latest_release).toLowerCase().trim())) ||
-            (s.last_tag && s.last_tag !== '')
+            isValidVersion(s.latest_release) || isValidVersion(s.last_tag)
         );
 
         let version = 'dev';
         if (src) {
-            if (src.latest_release && !['none', 'null', ''].includes(String(src.latest_release).toLowerCase().trim())) {
+            if (isValidVersion(src.latest_release)) {
                 version = src.latest_release;
-            } else if (src.last_tag) {
+            } else if (isValidVersion(src.last_tag)) {
                 version = src.last_tag;
             }
         }
@@ -993,7 +1013,23 @@ function displaySearchResults(results, query) {
     if (!container) return;
 
     if (results.length === 0) {
-        container.innerHTML = '<p style="color: var(--text-secondary);">No packages found.</p>';
+        const isArchivedFilter = activeFilters.archived;
+        
+        if (isArchivedFilter) {
+            container.innerHTML = `
+                <div class="empty-state happy">
+                    <div class="thumbs-up">🤗</div>
+                    <p class="empty-text happy-text">Great news !</p>
+                    <p class="empty-hint">No archived packages found. Everything is actively maintained!</p>
+                </div>`;
+        } else {
+            container.innerHTML = `
+                <div class="empty-state sad">
+                    <div class="sad-face">😭</div>
+                    <p class="empty-text">No packages found${query ? ' matching your criteria' : ''}...</p>
+                    <p class="empty-hint">Try adjusting your filters or search query</p>
+                </div>`;
+        }
         return;
     }
 
@@ -1048,6 +1084,7 @@ function sortResults() {
 
     let results = [...packages];
 
+    // Filtre par recherche textuelle
     if (query.startsWith('tag:')) {
         const t = query.replace('tag:', '').toLowerCase();
         results = results.filter(p => p.tags.some(tag => tag.toLowerCase().includes(t)));
@@ -1061,22 +1098,23 @@ function sortResults() {
         );
     }
 
+    // Reachable
     if (activeFilters.reachable) {
         results = results.filter(p =>
             p.sources && p.sources.some(s => s.reachable !== false)
         );
     }
 
+    // Archived
     if (activeFilters.archived) {
         results = results.filter(p =>
             p.sources && p.sources.some(s => s.archived === true)
         );
     }
 
+    // Extension
     if (activeFilters.extension) {
-        results = results.filter(p =>
-            p.extension === true || (p.sources && p.sources.some(s => s.extension === true))
-        );
+        results = results.filter(p => p.extension === true || p.extension === "true");
     }
 
     // Tri
