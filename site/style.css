@@ -1780,27 +1780,6 @@ body.light .filter-btn.active:focus-visible {
     animation: gentle-bounce 3s ease-in-out infinite;
 }
 
-@keyframes gentle-bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-}
-
-.sad-face {
-    filter: grayscale(0.4) drop-shadow(0 2px 4px rgba(100, 116, 139, 0.2));
-    animation: gentle-sigh 3s ease-in-out infinite;
-}
-
-@keyframes gentle-sigh {
-    0%, 100% { transform: translateY(0); opacity: 0.75; }
-    50% { transform: translateY(4px); opacity: 0.55; }
-}
-
-.happy:hover .thumbs-up,
-.sad:hover .sad-face {
-    filter: grayscale(0.2);
-    opacity: 0.9;
-}
-
 .empty-state {
     text-align: center;
     padding: 60px 20px;
@@ -1809,13 +1788,14 @@ body.light .filter-btn.active:focus-visible {
     flex-direction: column;
     align-items: center;
     gap: 16px;
+    fill: var(--text-primary);
     width: 100%;
 }
 
 .empty-text {
     font-size: 1.1rem;
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--text-secondary);
     margin: 0;
     text-align: center;
 }
@@ -1826,19 +1806,6 @@ body.light .filter-btn.active:focus-visible {
     margin: 0;
     line-height: 1.5;
     text-align: center;
-}
-
-.happy .empty-text {
-    background: linear-gradient(135deg, #ffd700 0%, #ff6b9d 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-size: 1.2rem;
-}
-
-.happy .empty-hint {
-    color: var(--accent-purple);
-    opacity: 0.85;
 }
 
 @media (max-width: 768px) {

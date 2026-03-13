@@ -51,6 +51,16 @@ function getGitHubIcon() {
     </svg>`;
 }
 
+function getWikiIcon() {
+    return `<svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+    <g transform="scale(.0465)">
+    <path d="m5355 2741c0 1437-1165 2601-2602 2601" fill="none" stroke="currentColor" stroke-width="14"/>
+    <path d="m152 2741c0-1437 1164-2602 2601-2602 303 0 550 55 820 150l42-6c629-187 1016-213 1213-208 110 3 161 16 161 16-368 41-1396 274-2236 1150-429 398-1008 1473-1162 2376 0 0 318-554 753-1097 394-458 833-915 1133-1022-259 253-1527 1570-2261 3342-645-474-1064-1238-1064-2099z" fill="currentColor"/>
+    <path d="m5355 2741c0 1437-1165 2601-2602 2601-466 0-904-122-1283-337 0 0-314 460-321 480 2-7 1-42 8-63 7-22 209-621 259-695 51-75 226-609 518-591 291 18 326 209 348 266 0 0 165-302-178-480 0 0 128 28 181 42 52 15 243 89 540-74 296-162 531-457 595-552 65-96 85-117 91-160 0 0-526-51-550-198 0 0 326 52 481 29 155-24 293-11 599-285s605-531 670-815c0 0-364 333-835 243 0 0 385-90 535-180 149-90 320-164 458-389 0 0 98-160 103-171 235 391 383 839 383 1329z" fill="#696969"/>
+    </g>
+    </svg>`;
+}
+
 function updateFooterMetadata() {
     let generatedAt = localStorage.getItem('registryGeneratedAt');
     let version = localStorage.getItem('registryVersion');
@@ -556,6 +566,9 @@ function showPackageDetail(pkgName, updateHash = true) {
         } else if (method === 'git') {
             methodDisplay = getGitHubIcon();
             methodClass = 'source-method icon-only';
+        } else if (src.url.includes('wiki.tcl-lang.org')) {
+            methodDisplay = getWikiIcon();
+            methodClass = 'source-method icon-only';
         } else {
             methodDisplay = src.method || 'unknown';
         }
@@ -1017,15 +1030,19 @@ function displaySearchResults(results, query) {
         
         if (isArchivedFilter) {
             container.innerHTML = `
-                <div class="empty-state happy">
-                    <div class="thumbs-up">🤗</div>
-                    <p class="empty-text happy-text">Great news !</p>
+                <div class="empty-state">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="88" height="88" fill="none" viewBox="0 0 24 24" stroke-width="0.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z" />
+                    </svg>
+                    <p class="empty-text">Great news !</p>
                     <p class="empty-hint">No archived packages found. Everything is actively maintained!</p>
                 </div>`;
         } else {
             container.innerHTML = `
-                <div class="empty-state sad">
-                    <div class="sad-face">😭</div>
+                <div class="empty-state">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="88" height="88" fill="none" viewBox="0 0 24 24" stroke-width="0.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.182 16.318A4.486 4.486 0 0 0 12.016 15a4.486 4.486 0 0 0-3.198 1.318M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z" />
+                    </svg>
                     <p class="empty-text">No packages found${query ? ' matching your criteria' : ''}...</p>
                     <p class="empty-hint">Try adjusting your filters or search query</p>
                 </div>`;
