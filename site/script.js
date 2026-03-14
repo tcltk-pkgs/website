@@ -765,8 +765,8 @@ function showSkeleton() {
 
     if (isHome) {
         const skPkg = document.getElementById('skeletonPackages');
-        const realPkg = document.getElementById('packagesScrollContainer');
-        if (skPkg) skPkg.style.display = 'flex';
+        const realPkg = document.getElementById('recentPackages');
+        if (skPkg) skPkg.style.display = 'grid';
         if (realPkg) realPkg.style.display = 'none';
 
         const skVer = document.getElementById('skeletonVersions');
@@ -783,12 +783,13 @@ function showSkeleton() {
 
 function hideSkeleton() {
     const skPkg = document.getElementById('skeletonPackages');
-    const realPkg = document.getElementById('packagesScrollContainer');
-    if (skPkg)  skPkg.style.display  = 'none';
-    if (realPkg) realPkg.style.display = 'block';
+    const realPkg = document.getElementById('recentPackages');
+    if (skPkg) skPkg.style.display = 'none';
+    if (realPkg) realPkg.style.display = 'grid';
+    
     const skVer = document.getElementById('skeletonVersions');
     const realVer = document.getElementById('recentVersions');
-    if (skVer)  skVer.style.display  = 'none';
+    if (skVer) skVer.style.display = 'none';
     if (realVer) realVer.style.display = 'flex';
 }
 
@@ -802,29 +803,14 @@ function renderRecentPackages() {
         return new Date(b.addedAt) - new Date(a.addedAt);
     });
 
-    const isMobile = window.innerWidth <= 768;
-    const totalItems = sorted.length;
-    const displayCount = isMobile ? Math.min(20, totalItems) : totalItems;
-    const limited = sorted.slice(0, displayCount);
-    const dup = [...limited, ...limited];
+    const limited = sorted.slice(0, 8);
 
-    el.innerHTML = dup.map(pkg => `
-        <div class="package-item" onclick="showPackageDetail('${escapeHTML(pkg.name).replace(/'/g, "\\'")}')">
+    el.innerHTML = limited.map(pkg => `
+        <div class="package-card" onclick="showPackageDetail('${escapeHTML(pkg.name).replace(/'/g, "\\'")}')">
             <span class="package-name">${escapeHTML(pkg.name)}</span>
-            <span class="package-desc">${escapeHTML(pkg.description)}</span>
-            <span class="package-date">${pkg.addedAt ? pkg.addedAt.split(/[T ]/)[0] : 'N/A'}</span>
-        </div>`).join('');
-
-    const pxPerSecondDesktop = 32;
-    const pxPerSecondMobile = 25;
-    const pxPerSecond = isMobile ? pxPerSecondMobile : pxPerSecondDesktop;
-
-    requestAnimationFrame(() => {
-        const totalHeight = el.scrollHeight;
-        const cycleHeight = totalHeight / 2;
-        const duration = cycleHeight / pxPerSecond;
-        el.style.animationDuration = `${duration}s`;
-    });
+            <span class="package-meta">${pkg.addedAt ? pkg.addedAt.split(/[T ]/)[0] : 'N/A'}</span>
+        </div>
+    `).join('');
 }
 
 function renderRecentVersions() {
