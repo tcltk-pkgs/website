@@ -211,42 +211,7 @@ body.dark .moon-icon { display: none; }
 }
 
 .gradient-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-    overflow: hidden;
-}
-
-.gradient-bg::before,
-.gradient-bg::after {
-    content: '';
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.08;
-    will-change: transform;
-}
-
-.gradient-bg::before {
-    top: -100px;
-    left: -100px;
-    background: var(--accent-blue);
-}
-
-.gradient-bg::after {
-    bottom: -100px;
-    right: -100px;
-    background: var(--accent-purple);
-}
-
-@media (max-width: 768px) {
-    .gradient-bg::before,
-    .gradient-bg::after { display: none; }
+    display: none;
 }
 
 .hero .container { text-align: center; position: relative; z-index: 1; }
