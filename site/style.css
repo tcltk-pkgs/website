@@ -1391,18 +1391,6 @@ body.light .metrics-table .num { color: var(--accent-primary); }
     color: var(--text-primary);
 }
 
-.about-svg-inline {
-    margin: 25px 0;
-    max-width: 600px;
-    color: var(--text-secondary);
-}
-
-.about-svg-inline svg {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
 /* ========================================
    CODE BLOCKS
    ======================================== */
@@ -2093,4 +2081,32 @@ body.light .filter-btn.active:focus-visible {
 .skeleton-scroll-container,
 .packages-list {
     display: none !important;
+}
+
+.svg-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1.5rem 0;
+    overflow: hidden;
+    color: var(--text-secondary);
+}
+
+.svg-center svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    max-height: 250px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .svg-center {
+        padding: 1rem 0;
+    }
+    
+    .svg-center svg {
+        max-height: 250px;
+    }
 }
