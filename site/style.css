@@ -2,21 +2,25 @@
 Distributed under MIT license. Please see LICENSE for details. */
 
 /* ========================================
-   DESIGN TOKENS
+   DESIGN TOKENS - SEMANTIC VARIABLES
    ======================================== */
 
 :root {
+    /* Background colors */
     --bg-primary: #0f172a;
     --bg-secondary: #1e293b;
     --bg-tertiary: #334155;
 
+    /* Text colors */
     --text-primary: #f1f5f9;
     --text-secondary: #94a3b8;
 
+    /* Main accents - PINK PALETTE (default) */
     --accent-primary: #ffaff3;
     --accent-secondary: #ff85e8;
     --accent-tertiary: #e879c7;
 
+    /* Semantic states */
     --error-color: #ef4444;
     --error-bg: rgba(239, 68, 68, 0.2);
     --error-bg-subtle: rgba(239, 68, 68, 0.05);
@@ -24,36 +28,151 @@ Distributed under MIT license. Please see LICENSE for details. */
     --warning-bg: rgba(245, 158, 11, 0.2);
     --warning-text: #000000;
 
+    /* Code/syntax colors */
     --code-string: #a5f3fc;
     --code-boolean: #fde047;
     --terminal-sha: #a5f3fc;
 
+    /* Borders and separators */
     --border: #334155;
 
+    /* Skeleton loading */
     --skeleton-base: #1e293b;
     --skeleton-shine: #334155;
 
-    --selection-bg: rgba(59, 130, 246, 0.3);
+    /* Selection */
+    --selection-bg: rgba(255, 175, 243, 0.3);
 
+    /* Shadows */
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
 
+    /* Dotted borders */
     --dotted-border-primary: rgba(255, 133, 232, 0.5);
     --dotted-border-secondary: rgba(232, 121, 199, 0.5);
 }
 
+/* ========================================
+   RANDOM COLOR PALETTES
+   ======================================== */
+
+/* GREEN PALETTE - Cyberpunk Mint */
+body.theme-green {
+    --accent-primary: #4ade80;
+    --accent-secondary: #22c55e;
+    --accent-tertiary: #16a34a;
+    --code-string: #86efac;
+    --code-boolean: #bef264;
+    --terminal-sha: #86efac;
+    --selection-bg: rgba(74, 222, 128, 0.3);
+    --dotted-border-primary: rgba(74, 222, 128, 0.5);
+    --dotted-border-secondary: rgba(34, 197, 94, 0.5);
+}
+
+body.theme-green.light {
+    --accent-primary: #16a34a;
+    --accent-secondary: #22c55e;
+    --accent-tertiary: #4ade80;
+    --code-string: #15803d;
+    --code-boolean: #65a30d;
+    --terminal-sha: #15803d;
+    --selection-bg: rgba(22, 163, 74, 0.25);
+    --dotted-border-primary: rgba(22, 163, 74, 0.4);
+    --dotted-border-secondary: rgba(34, 197, 94, 0.4);
+}
+
+/* ORANGE PALETTE - Warm Sunset */
+body.theme-orange {
+    --accent-primary: #fb923c;
+    --accent-secondary: #f97316;
+    --accent-tertiary: #ea580c;
+    --code-string: #fdba74;
+    --code-boolean: #fcd34d;
+    --terminal-sha: #fdba74;
+    --selection-bg: rgba(251, 146, 60, 0.3);
+    --dotted-border-primary: rgba(251, 146, 60, 0.5);
+    --dotted-border-secondary: rgba(249, 115, 22, 0.5);
+}
+
+body.theme-orange.light {
+    --accent-primary: #ea580c;
+    --accent-secondary: #f97316;
+    --accent-tertiary: #fb923c;
+    --code-string: #9a3412;
+    --code-boolean: #a16207;
+    --terminal-sha: #9a3412;
+    --selection-bg: rgba(234, 88, 12, 0.25);
+    --dotted-border-primary: rgba(234, 88, 12, 0.4);
+    --dotted-border-secondary: rgba(249, 115, 22, 0.4);
+}
+
+/* CYAN PALETTE - Tech Blue */
+body.theme-cyan {
+    --accent-primary: #22d3ee;
+    --accent-secondary: #06b6d4;
+    --accent-tertiary: #0891b2;
+    --code-string: #67e8f9;
+    --code-boolean: #a5f3fc;
+    --terminal-sha: #67e8f9;
+    --selection-bg: rgba(34, 211, 238, 0.3);
+    --dotted-border-primary: rgba(34, 211, 238, 0.5);
+    --dotted-border-secondary: rgba(6, 182, 212, 0.5);
+}
+
+body.theme-cyan.light {
+    --accent-primary: #0891b2;
+    --accent-secondary: #06b6d4;
+    --accent-tertiary: #22d3ee;
+    --code-string: #0e7490;
+    --code-boolean: #155e75;
+    --terminal-sha: #0e7490;
+    --selection-bg: rgba(8, 145, 178, 0.25);
+    --dotted-border-primary: rgba(8, 145, 178, 0.4);
+    --dotted-border-secondary: rgba(6, 182, 212, 0.4);
+}
+
+/* PINK PALETTE - Pink Blossom (explicit) */
+body.theme-pink {
+    --accent-primary: #ffaff3;
+    --accent-secondary: #ff85e8;
+    --accent-tertiary: #e879c7;
+    --code-string: #a5f3fc;
+    --code-boolean: #fde047;
+    --terminal-sha: #a5f3fc;
+    --selection-bg: rgba(255, 175, 243, 0.3);
+    --dotted-border-primary: rgba(255, 133, 232, 0.5);
+    --dotted-border-secondary: rgba(232, 121, 199, 0.5);
+}
+
+body.theme-pink.light {
+    --accent-primary: #e879c7;
+    --accent-secondary: #d946ef;
+    --accent-tertiary: #c026d3;
+    --code-string: #0d9488;
+    --code-boolean: #d97706;
+    --terminal-sha: #4f46e5;
+    --selection-bg: rgba(232, 121, 199, 0.3);
+    --dotted-border-primary: rgba(85, 85, 85, 0.5);
+    --dotted-border-secondary: rgba(102, 102, 102, 0.5);
+}
+
+/* Light mode - base (inherits from active theme) */
 body.light {
+    /* Background colors */
     --bg-primary: #fafaf9;
     --bg-secondary: #f5f5f4;
     --bg-tertiary: #e7e5e4;
 
+    /* Text colors */
     --text-primary: #151515;
     --text-secondary: #536269;
 
+    /* Main accents - PINK by default in light mode */
     --accent-primary: #e879c7;
     --accent-secondary: #d946ef;
     --accent-tertiary: #c026d3;
 
+    /* Semantic states */
     --error-color: #dc2626;
     --error-bg: rgba(220, 38, 38, 0.2);
     --error-bg-subtle: rgba(220, 38, 38, 0.05);
@@ -61,20 +180,26 @@ body.light {
     --warning-bg: rgba(217, 119, 6, 0.2);
     --warning-text: #000000;
 
+    /* Code/syntax colors */
     --code-string: #0d9488;
     --code-boolean: #d97706;
     --terminal-sha: #4f46e5;
 
+    /* Borders and separators */
     --border: #e7e5e1;
 
+    /* Skeleton loading */
     --skeleton-base: #e7e5e4;
     --skeleton-shine: #f5f5f4;
 
+    /* Selection */
     --selection-bg: rgba(232, 121, 199, 0.3);
 
+    /* Shadows */
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
 
+    /* Dotted borders */
     --dotted-border-primary: rgba(85, 85, 85, 0.5);
     --dotted-border-secondary: rgba(102, 102, 102, 0.5);
 }
@@ -947,10 +1072,8 @@ body.light .source-card.archived {
 .author-name {
     font-size: 0.95rem;
     font-weight: 600;
-    color: var(--accent-primary);
+    color: var(--text-primary);
 }
-
-body.light .author-name { color: var(--text-primary); }
 
 /* ========================================
    STATUS BADGES
@@ -1297,7 +1420,7 @@ body.light .metrics-table .num { color: var(--accent-primary); }
     line-height: 1.6;
 }
 
-.json-key { color: var(--accent-primary); }
+.json-key { color: var(--accent-tertiary); }
 .json-string { color: var(--code-string); }
 .json-boolean { color: var(--code-boolean); }
 
