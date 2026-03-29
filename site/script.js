@@ -720,8 +720,22 @@ function showPackageDetail(pkgName, updateHash = true) {
             </div>`;
         }
 
+        let sourceMaintenanceWarning = '';
+        if (src.last_commit) {
+            const lastDate = Array.isArray(src.last_commit) ? src.last_commit[0] : src.last_commit;
+            if (lastDate) {
+                const date = new Date(lastDate);
+                const fiveYearsAgo = new Date();
+                fiveYearsAgo.setFullYear(fiveYearsAgo.getFullYear() - 5);
+                if (date < fiveYearsAgo) {
+                    sourceMaintenanceWarning = `<div class="maintenance-warning stale-warning">⚠️ Last update: ${lastDate.split(' ')[0]} (may be unmaintained)</div>`;
+                }
+            }
+        }
+
         return `
         <div class="source-card ${index === 0 ? 'primary' : ''} ${src.reachable === false ? 'unreachable' : ''} ${src.archived ? 'archived' : ''}">
+            ${sourceMaintenanceWarning}
             <div class="source-header">
                 <div class="source-author">
                     <span class="author-label">author/orgs</span>
@@ -768,26 +782,8 @@ function showPackageDetail(pkgName, updateHash = true) {
     const container = document.getElementById('packageDetail');
     if (!container) return;
 
-    let maintenanceWarning = '';
-    if (pkg.archived && pkg.sources.length === 1) {
-        maintenanceWarning = `<div class="maintenance-warning archived-warning">⚠️ This package is archived</div>`;
-    } else if (pkg.reachable === false && pkg.sources.length === 1) {
-        maintenanceWarning = `<div class="maintenance-warning unreachable-warning">⚠️ Repository currently unreachable</div>`;
-    } else if (pkg.lastCommit) {
-        const lastDate = Array.isArray(pkg.lastCommit) ? pkg.lastCommit[0] : pkg.lastCommit;
-        if (lastDate) {
-            const date = new Date(lastDate);
-            const fiveYearsAgo = new Date();
-            fiveYearsAgo.setFullYear(fiveYearsAgo.getFullYear() - 5);
-            if (date < fiveYearsAgo) {
-                maintenanceWarning = `<div class="maintenance-warning stale-warning">⚠️ Last update: ${lastDate.split(' ')[0]} (may be unmaintained)</div>`;
-            }
-        }
-    }
-
     container.innerHTML = `
         <div class="package-detail">
-            ${maintenanceWarning}
             <div class="detail-header">
                 <h1>${escapeHTML(pkg.name)}</h1>
                 <p class="detail-desc">${escapeHTML(pkg.description)}</p>
