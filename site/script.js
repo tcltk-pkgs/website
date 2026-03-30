@@ -385,6 +385,8 @@ function renderInterface() {
 document.addEventListener('DOMContentLoaded', function() {
     loadTheme();
 
+    setupEventDelegation();
+
     const hash = window.location.hash || '#/';
     if (hash === '#/' || hash === '') {
         showSkeleton();
@@ -586,6 +588,38 @@ function extractShortUrl(url, type) {
     }
 }
 
+function sanitizeUrl(url) {
+    if (!url) return '#';
+    const clean = url.trim();
+    if (clean.startsWith('http://') || clean.startsWith('https://')) {
+        return escapeHTML(clean);
+    }
+    return '#';
+}
+
+function setupEventDelegation() {
+    document.body.addEventListener('click', function(event) {
+
+        const tagEl = event.target.closest('[data-tag-name]');
+        if (tagEl) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const tagName = tagEl.getAttribute('data-tag-name');
+            searchByTag(tagName);
+            return;
+        }
+        const pkgCard = event.target.closest('[data-pkg-name]');
+        if (pkgCard) {
+            event.preventDefault();
+            const pkgName = pkgCard.getAttribute('data-pkg-name');
+            showPackageDetail(pkgName);
+            return;
+        }
+        
+    });
+}
+
 function showPackageDetail(pkgName, updateHash = true) {
     const pkg = packages.find(p => p.name === pkgName);
     if (!pkg) { console.error('Package not found:', pkgName); return; }
@@ -601,7 +635,7 @@ function showPackageDetail(pkgName, updateHash = true) {
             artifactsRow = `
             <div class="source-artifacts-row">
                 <span class="url-label">artifacts:</span>
-                <a href="${src.artifacts}" target="_blank" class="source-url" title="${src.artifacts}">
+                <a href="${sanitizeUrl(src.artifacts)}" target="_blank" class="source-url" title="${sanitizeUrl(src.artifacts)}">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
                         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
                     </svg>
@@ -749,7 +783,7 @@ function showPackageDetail(pkgName, updateHash = true) {
                 <div class="source-links">
                     <div class="source-url-row">
                         <span class="url-label">repository:</span>
-                        <a href="${src.url}" target="_blank" class="source-url" title="${src.url}">
+                        <a href="${sanitizeUrl(src.url)}" target="_blank" class="source-url" title="${sanitizeUrl(src.url)}">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
                                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                                 <polyline points="15 3 21 3 21 9"></polyline>
@@ -761,7 +795,7 @@ function showPackageDetail(pkgName, updateHash = true) {
                     ${hasDifferentWeb ? `
                     <div class="source-web-row">
                         <span class="url-label">documentation:</span>
-                        <a href="${src.web}" target="_blank" class="source-web" title="${src.web}">
+                        <a href="${sanitizeUrl(src.web)}" target="_blank" class="source-web" title="${sanitizeUrl(src.web)}">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
                                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                                 <polyline points="14 2 14 8 20 8"></polyline>
@@ -794,7 +828,7 @@ function showPackageDetail(pkgName, updateHash = true) {
                 <div class="sources-grid">${sourcesCards}</div>
             </div>
             <div class="detail-tags">
-                ${pkg.tags.map(t => `<span class="tag" onclick="searchByTag('${escapeHTML(t)}')">${escapeHTML(t)}</span>`).join('')}
+                ${pkg.tags.map(t => `<span class="tag" data-tag-name="${escapeHTML(t)}">${escapeHTML(t)}</span>`).join('')}
             </div>
         </div>`;
 
@@ -862,7 +896,7 @@ function renderRecentPackages() {
     const limited = sorted.slice(0, 8);
 
     el.innerHTML = limited.map(pkg => `
-        <div class="package-card" onclick="showPackageDetail('${escapeHTML(pkg.name).replace(/'/g, "\\'")}')">
+        <div class="package-card" data-pkg-name="${escapeHTML(pkg.name)}">
             <span class="package-name">${escapeHTML(pkg.name)}</span>
             <span class="package-meta">${pkg.addedAt ? pkg.addedAt.split(/[T ]/)[0] : 'N/A'}</span>
         </div>
