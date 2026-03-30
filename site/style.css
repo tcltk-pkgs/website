@@ -631,7 +631,7 @@ body.light .hero .search-box button:hover { color: var(--accent-secondary); }
 .tags {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 6px;
 }
 
