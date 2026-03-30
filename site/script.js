@@ -377,6 +377,7 @@ function renderInterface() {
     renderExploreTags();
     renderRecentPackages();
     renderRecentVersions();
+    renderRecentCommits();
     renderMetrics();
     rotateFunFacts();
 }
@@ -840,6 +841,12 @@ function hideSkeleton() {
     const realVer = document.getElementById('recentVersions');
     if (skVer) skVer.style.display = 'none';
     if (realVer) realVer.style.display = 'flex';
+
+    const skCommits = document.getElementById('skeletonCommits');
+    const realCommits = document.getElementById('recentCommits');
+    if (skCommits) skCommits.style.display = 'none';
+    if (realCommits) realCommits.style.display = 'grid';
+
 }
 
 function renderRecentPackages() {
@@ -963,6 +970,71 @@ function renderRecentVersions() {
         <div class="version-item" onclick="showPackageDetail('${escapeHTML(pkg.name).replace(/'/g, "\\'")}')" title="${tooltip}">
             <span class="version-name">${escapeHTML(pkg.name)}</span>
             <span class="version-number">${escapeHTML(version)}</span>
+        </div>`;
+    }).join('');
+}
+
+function renderRecentCommits() {
+    const el = document.getElementById('recentCommits');
+    if (!el) return;
+
+    const isMobile = window.innerWidth <= 768;
+    const limit = isMobile ? 6 : 8;
+    
+    const CUTOFF_DATE = new Date('2026-01-01T00:00:00');
+
+    const recentCommits = [];
+    const olderCommits = [];
+
+    packages.forEach(pkg => {
+        if (!pkg.maxCommitDate || !(pkg.maxCommitDate instanceof Date) || isNaN(pkg.maxCommitDate)) {
+            return;
+        }
+
+        const item = {
+            pkg,
+            commitDate: pkg.maxCommitDate,
+            isRecent: pkg.maxCommitDate >= CUTOFF_DATE
+        };
+
+        if (pkg.maxCommitDate >= CUTOFF_DATE) {
+            recentCommits.push(item);
+        } else {
+            olderCommits.push(item);
+        }
+    });
+
+    recentCommits.sort((a, b) => b.commitDate - a.commitDate || a.pkg.name.localeCompare(b.pkg.name));
+    olderCommits.sort((a, b) => b.commitDate - a.commitDate || a.pkg.name.localeCompare(b.pkg.name));
+
+    let combined = [...recentCommits];
+    
+    if (combined.length < limit) {
+        const needed = limit - combined.length;
+        combined = combined.concat(olderCommits.slice(0, needed));
+    } else {
+        combined = combined.slice(0, limit);
+    }
+
+    if (combined.length === 0) {
+        el.innerHTML = '<p style="color: var(--text-secondary); font-size: 0.85rem; grid-column: 1/-1;">No recent commits</p>';
+        return;
+    }
+
+    el.innerHTML = combined.map(item => {
+        const pkg = item.pkg;
+        const dateStr = item.commitDate.toISOString().split('T')[0];
+
+        const daysAgo = Math.floor((new Date() - item.commitDate) / (1000 * 60 * 60 * 24));
+        let timeAgo;
+        if (daysAgo === 0) timeAgo = 'today';
+        else if (daysAgo === 1) timeAgo = 'yesterday';
+        else timeAgo = `${daysAgo} days ago`;
+
+        return `
+        <div class="package-card" onclick="showPackageDetail('${escapeHTML(pkg.name).replace(/'/g, "\\'")}')" title="Last commit: ${dateStr} (${timeAgo})">
+            <span class="package-name">${escapeHTML(pkg.name)}</span>
+            <span class="package-meta" style="margin-left: auto;">${dateStr}</span>
         </div>`;
     }).join('');
 }
