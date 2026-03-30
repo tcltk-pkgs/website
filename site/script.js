@@ -868,6 +868,8 @@ function renderRecentVersions() {
 
     const isMobile = window.innerWidth <= 768;
     const limit = isMobile ? 6 : 11;
+    
+    const CUTOFF_DATE = new Date('2026-01-01T00:00:00');
 
     const isValidVersion = (val) => {
         if (!val) return false;
@@ -875,47 +877,90 @@ function renderRecentVersions() {
         return !['none', 'null', ''].includes(normalized);
     };
 
-    const sorted = [...packages]
-        .filter(p => p.sources && p.sources.some(s => 
-            isValidVersion(s.latest_release) || isValidVersion(s.last_tag)
-        ))
-        .sort((a, b) => {
-            const getReleaseDate = (pkg) => {
-                if (pkg.sources && pkg.sources.length > 0) {
-                    for (const s of pkg.sources) {
-                        if (s.lastReleaseDate && s.lastReleaseDate instanceof Date && !isNaN(s.lastReleaseDate)) {
-                            return s.lastReleaseDate;
-                        }
+    const recentReleases = [];
+    const olderReleases = [];
+    const tagOnly = [];
+
+    packages.forEach(pkg => {
+        let releaseDate = null;
+        let version = null;
+        let hasTag = false;
+        
+        if (pkg.sources) {
+            for (const src of pkg.sources) {
+                if (src.lastReleaseDate && src.lastReleaseDate instanceof Date && !isNaN(src.lastReleaseDate)) {
+                    if (!releaseDate || src.lastReleaseDate > releaseDate) {
+                        releaseDate = src.lastReleaseDate;
+                        version = src.latest_release || src.last_tag;
                     }
                 }
-                return pkg.maxCommitDate || new Date(0);
+                
+                if (isValidVersion(src.last_tag)) {
+                    hasTag = true;
+                    if (!version) version = src.last_tag;
+                }
+            }
+        }
+        
+        if (releaseDate) {
+            const item = { 
+                pkg, 
+                releaseDate, 
+                version,
+                isRecent: releaseDate >= CUTOFF_DATE 
             };
             
-            return getReleaseDate(b) - getReleaseDate(a);
-        })
-        .slice(0, limit);
+            if (releaseDate >= CUTOFF_DATE) {
+                recentReleases.push(item);
+            } else {
+                olderReleases.push(item);
+            }
+        } else if (hasTag) {
+            tagOnly.push({
+                pkg,
+                version,
+                hasDate: false
+            });
+        }
+    });
 
-    if (sorted.length === 0) {
+    recentReleases.sort((a, b) => b.releaseDate - a.releaseDate || a.pkg.name.localeCompare(b.pkg.name));
+    olderReleases.sort((a, b) => b.releaseDate - a.releaseDate || a.pkg.name.localeCompare(b.pkg.name));
+    tagOnly.sort((a, b) => a.pkg.name.localeCompare(b.pkg.name));
+
+    let combined = [...recentReleases];
+    
+    if (combined.length < limit) {
+        const needFromOlder = limit - combined.length;
+        combined = combined.concat(olderReleases.slice(0, needFromOlder));
+    }
+    
+    if (combined.length < limit) {
+        const needFromTags = limit - combined.length;
+        combined = combined.concat(tagOnly.slice(0, needFromTags));
+    } else {
+        combined = combined.slice(0, limit);
+    }
+
+    if (combined.length === 0) {
         el.innerHTML = '<p style="color: var(--text-secondary); font-size: 0.85rem;">No recent releases</p>';
         return;
     }
 
-    el.innerHTML = sorted.map(pkg => {
-        const src = pkg.sources.find(s => 
-            isValidVersion(s.latest_release) || isValidVersion(s.last_tag)
-        );
+    el.innerHTML = combined.map(item => {
+        const pkg = item.pkg;
+        const version = item.version || 'unknown';
 
-        let version = 'dev';
-        if (src) {
-            if (isValidVersion(src.latest_release)) {
-                version = src.latest_release;
-            } else if (isValidVersion(src.last_tag)) {
-                version = src.last_tag;
-            }
+        let tooltip;
+        if (item.releaseDate) {
+            const dateStr = item.releaseDate.toISOString().split('T')[0];
+            tooltip = `Released: ${dateStr}`;
+        } else {
+            tooltip = `Tag: ${version} (date unknown)`;
         }
         
         return `
-        <div class="version-item" onclick="showPackageDetail('${escapeHTML(pkg.name).replace(/'/g, "\\'")}')">
+        <div class="version-item" onclick="showPackageDetail('${escapeHTML(pkg.name).replace(/'/g, "\\'")}')" title="${tooltip}">
             <span class="version-name">${escapeHTML(pkg.name)}</span>
             <span class="version-number">${escapeHTML(version)}</span>
         </div>`;
