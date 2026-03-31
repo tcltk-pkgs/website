@@ -379,6 +379,7 @@ function renderInterface() {
     renderRecentVersions();
     renderRecentCommits();
     renderMetrics();
+    populateTagSelect();
     rotateFunFacts();
 }
 
@@ -503,6 +504,7 @@ function initializeSearchPage(query) {
     const input = document.getElementById('searchInput2');
     const sortSelect = document.getElementById('sortSelect');
     const resetBtn = input?.parentElement?.querySelector('.reset-btn');
+    const tagSelect = document.getElementById('tagSelect');
 
     if (input) {
         input.value = query || '';
@@ -524,6 +526,20 @@ function initializeSearchPage(query) {
             
             input.addEventListener('input', toggleClearBtn);
             toggleClearBtn();
+        }
+    }
+
+    if (tagSelect) {
+        if (query && query.startsWith('tag:')) {
+            const tagValue = query.replace('tag:', '');
+            const optionExists = Array.from(tagSelect.options).some(opt => opt.value === tagValue);
+            if (optionExists) {
+                tagSelect.value = tagValue;
+            } else {
+                tagSelect.value = '';
+            }
+        } else {
+            tagSelect.value = '';
         }
     }
 
@@ -828,7 +844,7 @@ function showPackageDetail(pkgName, updateHash = true) {
                 <div class="sources-grid">${sourcesCards}</div>
             </div>
             <div class="detail-tags">
-                ${pkg.tags.map(t => `<span class="tag" data-tag-name="${escapeHTML(t)}">${escapeHTML(t)}</span>`).join('')}
+                ${(pkg.tags || []).filter(t => t && t.trim() !== '').map(t => `<span class="tag" data-tag-name="${escapeHTML(t)}">${escapeHTML(t)}</span>`).join('')}
             </div>
         </div>`;
 
@@ -1180,8 +1196,8 @@ function performSearch(query) {
 
     if (trimmedQuery) {
         if (trimmedQuery.startsWith('tag:')) {
-            const t = trimmedQuery.replace('tag:', '');
-            results = results.filter(p => p.tags.some(tag => tag.toLowerCase().includes(t)));
+                const t = trimmedQuery.replace('tag:', '').toLowerCase();
+                results = results.filter(p => p.tags.some(tag => tag && tag.toLowerCase() === t));
         } else {
             results = results.filter(p =>
                 p.name.toLowerCase().includes(trimmedQuery) ||
@@ -1250,7 +1266,7 @@ function displaySearchResults(results, query) {
                 ${pkg.hasCommits ? `<span>updated: ${pkg.maxCommitDate.toISOString().split('T')[0]}</span>` : '<span>updated: N/A</span>'}
             </div>
             <div class="result-tags">
-                ${pkg.tags.map(t => `<span class="result-tag" onclick="event.stopPropagation(); searchByTag('${escapeHTML(t)}')">${escapeHTML(t)}</span>`).join('')}
+                ${(pkg.tags || []).filter(t => t && t.trim() !== '').map(t => `<span class="result-tag" onclick="event.stopPropagation(); searchByTag('${escapeHTML(t)}')">${escapeHTML(t)}</span>`).join('')}
             </div>
         </div>`).join('');
 }
@@ -1281,6 +1297,58 @@ function toggleFilter(filterName) {
     sortResults();
 }
 
+function populateTagSelect() {
+    const select = document.getElementById('tagSelect');
+    if (!select || packages.length === 0) return;
+    
+    const currentValue = select.value;
+    while (select.options.length > 1) {
+        select.remove(1);
+    }
+    
+    const tagCounts = {};
+    packages.forEach(pkg => {
+        if (pkg.tags && Array.isArray(pkg.tags)) {
+            pkg.tags.forEach(tag => {
+                // Ignorer les tags vides ou null
+                if (tag && tag.trim() !== '') {
+                    tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+                }
+            });
+        }
+    });
+    
+    const sortedTags = Object.keys(tagCounts).sort((a, b) => a.localeCompare(b));
+    
+    sortedTags.forEach(tag => {
+        const option = document.createElement('option');
+        option.value = tag;
+        option.textContent = `${tag} (${tagCounts[tag]})`;
+        select.appendChild(option);
+    });
+    
+    if (currentValue && tagCounts[currentValue]) {
+        select.value = currentValue;
+    }
+}
+
+function handleTagSelect(value) {
+    if (value) {
+        searchByTag(value);
+    } else {
+        const input = document.getElementById('searchInput2');
+        const currentQuery = input?.value || '';
+        if (currentQuery.startsWith('tag:')) {
+            window.location.hash = '#/search';
+            if (input) input.value = '';
+            if (document.getElementById('resultsCount')) {
+                document.getElementById('resultsCount').textContent = `${packages.length} packages`;
+            }
+            displaySearchResults(packages, '');
+        }
+    }
+}
+
 function sortResults() {
     const sortBy = document.getElementById('sortSelect')?.value;
     const query = document.getElementById('searchInput2')?.value.trim() || '';
@@ -1290,7 +1358,7 @@ function sortResults() {
     // Filter by text search
     if (query.startsWith('tag:')) {
         const t = query.replace('tag:', '').toLowerCase();
-        results = results.filter(p => p.tags.some(tag => tag.toLowerCase().includes(t)));
+        results = results.filter(p => p.tags.some(tag => tag && tag.toLowerCase() === t));
     } else if (query) {
         const lowerQuery = query.toLowerCase();
         results = results.filter(p =>

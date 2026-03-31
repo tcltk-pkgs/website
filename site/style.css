@@ -557,6 +557,14 @@ body.light .sparkle { color: var(--accent-primary); }
     outline: none;
 }
 
+.sort select#tagSelect {
+    max-width: 160px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding-right: 24px; /* espace pour la flèche du select */
+}
+
 /* Results count */
 .results-count { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 15px; }
 .results-list { display: flex; flex-direction: column; gap: 12px; }
@@ -1843,6 +1851,24 @@ body.light .filter-btn.active:focus-visible {
     .hero { padding-top: 70px; }
     .hero h1 { font-size: 1.2rem; }
 
+    .svg-center {
+        padding: 1rem 0;
+    }
+    
+    .svg-center svg {
+        max-height: 250px;
+    }
+
+    .thumbs-up,
+    .sad-face {
+        font-size: 40px;
+        margin-bottom: 12px;
+    }
+    
+    .empty-state {
+        padding: 40px 20px;
+    }
+
     .package-item {
         flex-direction: column;
         align-items: flex-start;
@@ -1902,6 +1928,13 @@ body.light .filter-btn.active:focus-visible {
         min-width: 140px;
         padding: 10px 12px;
     }
+
+    .sort label {
+        min-width: 30px;
+        flex-shrink: 0;
+        text-align: left;
+    }
+    
 
     /* Structure search-box mobile - page search */
     .search-row .search-box {
@@ -1987,6 +2020,10 @@ body.light .filter-btn.active:focus-visible {
         min-width: auto;
     }
 
+    .sort select#tagSelect {
+        max-width: none;
+    }
+
     .filter-btn {
         font-size: 0.75rem;
         padding: 5px 10px;
@@ -2065,18 +2102,6 @@ body.light .filter-btn.active:focus-visible {
     text-align: center;
 }
 
-@media (max-width: 768px) {
-    .thumbs-up,
-    .sad-face {
-        font-size: 40px;
-        margin-bottom: 12px;
-    }
-    
-    .empty-state {
-        padding: 40px 20px;
-    }
-}
-
 .packages-scroll-container,
 .skeleton-scroll-container,
 .packages-list {
@@ -2098,15 +2123,4 @@ body.light .filter-btn.active:focus-visible {
     height: auto;
     display: block;
     max-height: 250px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .svg-center {
-        padding: 1rem 0;
-    }
-    
-    .svg-center svg {
-        max-height: 250px;
-    }
 }

@@ -226,6 +226,13 @@
                         </form>
 
                         <div class="sort">
+                            <label>tag:</label>
+                            <select id="tagSelect" onchange="handleTagSelect(this.value)">
+                                <option value="">all tags</option>
+                            </select>
+                        </div>
+
+                        <div class="sort">
                             <label>sort:</label>
                             <select id="sortSelect" onchange="sortResults()">
                                 <option value="recent">version (recent)</option>
