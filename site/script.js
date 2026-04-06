@@ -187,11 +187,23 @@ async function loadPackagesData() {
                         }
                     }
 
+                    let authors = [];
+                    if (src.author) {
+                        if (Array.isArray(src.author)) {
+                            authors = src.author.map(a => a.trim()).filter(Boolean);
+                        } else if (typeof src.author === 'string') {
+                            authors = [src.author.trim()];
+                        }
+                    }
+                    if (authors.length === 0) {
+                        authors = ['unknown'];
+                    }
+
                     return {
                         ...src,
                         url: cleanUrl(src.url),
                         web: cleanUrl(src.web),
-                        author: src.author ? src.author.trim() : 'unknown',
+                        author: authors,
                         license: src.license ? src.license.trim() : 'Unknown',
                         lastReleaseDate: releaseDate
                     };
@@ -248,11 +260,13 @@ function calculateMetrics() {
 
         if (pkg.sources && pkg.sources.length > 0) {
             pkg.sources.forEach(src => {
-                if (src.author) {
-                    if (!allAuthors[src.author]) {
-                        allAuthors[src.author] = { count: 0 };
-                    }
-                    allAuthors[src.author].count++;
+                if (src.author && Array.isArray(src.author)) {
+                    src.author.forEach(auth => {
+                        if (!allAuthors[auth]) {
+                            allAuthors[auth] = { count: 0 };
+                        }
+                        allAuthors[auth].count++;
+                    });
                 }
 
                 if (src.url) {
@@ -790,7 +804,7 @@ function showPackageDetail(pkgName, updateHash = true) {
             <div class="source-header">
                 <div class="source-author">
                     <span class="author-label">author(s)/orgs</span>
-                    <span class="author-name">${escapeHTML(src.author) || 'unknown'}</span>
+                    <span class="author-name">${escapeHTML(src.author.join(', '))}</span>
                     ${statusBadges}
                 </div>
                 <span class="${methodClass}">${methodDisplay}</span>
@@ -1197,14 +1211,17 @@ function performSearch(query) {
 
     if (trimmedQuery) {
         if (trimmedQuery.startsWith('tag:')) {
-                const t = trimmedQuery.replace('tag:', '').toLowerCase();
-                results = results.filter(p => p.tags.some(tag => tag && tag.toLowerCase() === t));
+            const t = trimmedQuery.replace('tag:', '').toLowerCase();
+            results = results.filter(p => p.tags.some(tag => tag && tag.toLowerCase() === t));
         } else {
+            const lowerQuery = query.toLowerCase();
             results = results.filter(p =>
-                p.name.toLowerCase().includes(trimmedQuery) ||
-                p.description.toLowerCase().includes(trimmedQuery) ||
-                p.tags.some(t => t.toLowerCase().includes(trimmedQuery)) ||
-                p.sources.some(s => s.author && s.author.toLowerCase().includes(trimmedQuery))
+                p.name.toLowerCase().includes(lowerQuery) ||
+                p.description.toLowerCase().includes(lowerQuery) ||
+                p.tags.some(t => t.toLowerCase().includes(lowerQuery)) ||
+                p.sources.some(s => 
+                    s.author && s.author.some(a => a.toLowerCase().includes(lowerQuery))
+                )
             );
         }
     }
@@ -1366,7 +1383,9 @@ function sortResults() {
             p.name.toLowerCase().includes(lowerQuery) ||
             p.description.toLowerCase().includes(lowerQuery) ||
             p.tags.some(t => t.toLowerCase().includes(lowerQuery)) ||
-            p.sources.some(s => s.author && s.author.toLowerCase().includes(lowerQuery))
+            p.sources.some(s => 
+                s.author && s.author.some(a => a.toLowerCase().includes(lowerQuery))
+            )
         );
     }
 
