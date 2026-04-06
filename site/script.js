@@ -909,7 +909,8 @@ function renderRecentPackages() {
         return new Date(b.addedAt) - new Date(a.addedAt);
     });
 
-    const limited = sorted.slice(0, 8);
+    const isMobile = window.innerWidth <= 768;
+    const limited = isMobile ? sorted.slice(0, 6) : sorted.slice(0, 8); ;
 
     el.innerHTML = limited.map(pkg => `
         <div class="package-card" data-pkg-name="${escapeHTML(pkg.name)}">
