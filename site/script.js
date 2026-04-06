@@ -789,7 +789,7 @@ function showPackageDetail(pkgName, updateHash = true) {
             ${sourceMaintenanceWarning}
             <div class="source-header">
                 <div class="source-author">
-                    <span class="author-label">author/orgs</span>
+                    <span class="author-label">author(s)/orgs</span>
                     <span class="author-name">${escapeHTML(src.author) || 'unknown'}</span>
                     ${statusBadges}
                 </div>
