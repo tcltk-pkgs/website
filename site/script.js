@@ -719,7 +719,7 @@ function showPackageDetail(pkgName, updateHash = true) {
 
             const rowsHtml = dates.map((dateStr, i) => {
                 const date = dateStr ? dateStr.split(' ')[0] : 'N/A';
-                const sha = shas[i] ? shas[i].substring(0, 7) : '-------';
+                const sha = shas[i] ? shas[i] : '-------';
                 return `
                     <div class="terminal-row">
                         <span class="terminal-sha">${escapeHTML(sha)}</span>
