@@ -600,7 +600,8 @@ function extractShortUrl(url, type) {
         if (type === 'repo') {
             const match = url.match(/name=([^&]+)/);
             if (match) return match[1];
-            return urlObj.pathname.replace(/^\/|\/$/g, '');
+            const path = urlObj.pathname.replace(/^\/|\/$/g, '');
+            return path || urlObj.hostname;
         } else if (type === 'doc') {
             const hostname = urlObj.hostname.replace(/^www\./, '');
             let pathname = urlObj.pathname.replace(/\/$/, '');
