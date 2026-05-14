@@ -27,7 +27,7 @@ function escapeHTML(str) {
         }[tag]));
 }
 
-
+const MIN_DOMAIN_COUNT = 2;
 const USE_CLOUDFLARE = true;
 
 const REGISTRY_URL = USE_CLOUDFLARE
@@ -1154,12 +1154,18 @@ function renderMetrics() {
 
     const domainsTable = document.getElementById('domainsTable');
     if (domainsTable && metrics.domains) {
-        domainsTable.innerHTML = metrics.domains.map(domain => `
-            <tr>
-                <td>${escapeHTML(domain.name)}</td>
-                <td class="num">${domain.count}</td>
-            </tr>
-        `).join('');
+        const filteredDomains = metrics.domains.filter(d => d.count >= MIN_DOMAIN_COUNT);
+
+        if (filteredDomains.length === 0) {
+            domainsTable.innerHTML = `<tr><td colspan="2" style="color:var(--text-secondary);font-size:0.85rem;text-align:center;padding:12px;">No domain with ≥${MIN_DOMAIN_COUNT} packages</td></tr>`;
+        } else {
+            domainsTable.innerHTML = filteredDomains.map(domain => `
+                <tr>
+                    <td>${escapeHTML(domain.name)}</td>
+                    <td class="num">${domain.count}</td>
+                </tr>
+            `).join('');
+        }
     }
 }
 
